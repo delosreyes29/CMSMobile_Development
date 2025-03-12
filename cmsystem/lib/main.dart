@@ -1,3 +1,4 @@
+import 'package:cmsystem/screens/launch_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cmsystem/screens/home_screen.dart';
 import 'package:cmsystem/screens/notification/notification_screen_zero.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MainScreen(),
+      home: const LaunchScreen(),
     );
   }
 }

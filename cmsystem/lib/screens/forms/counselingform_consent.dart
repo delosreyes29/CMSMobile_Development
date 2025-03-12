@@ -26,9 +26,13 @@ class _CounselingFormConsentState extends State<CounselingFormConsent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Student Initial/Routine Interview"),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        title: const Text('Student Initial/Routine Interview',
+            style: TextStyle(fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.pink.shade100,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
         elevation: 0,
       ),
       body: Padding(

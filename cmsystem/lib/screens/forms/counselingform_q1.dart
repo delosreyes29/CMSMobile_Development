@@ -16,9 +16,13 @@ class CounselingFormQ1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Student Initial/Routine Interview"),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        title: const Text('Student Initial/Routine Interview',
+            style: TextStyle(fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.pink.shade100,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
         elevation: 0,
       ),
       body: Padding(
@@ -39,40 +43,50 @@ class CounselingFormQ1 extends StatelessWidget {
             Center(
               child: Column(
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CounselingFormQ2()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.pink.shade700,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                  SizedBox(
+                    width: double.infinity, // Ensures full width
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CounselingFormQ2()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.pink.shade700,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12), // Ensures same height
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
+                      child: const Text('Yes',
+                          style: TextStyle(fontSize: 16, color: Colors.white)),
                     ),
-                    child: const Text('Yes',
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
                   ),
                   const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CounselingFormQ2_1()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.pink.shade700,
-                      minimumSize: const Size(double.infinity, 50),
+                  SizedBox(
+                    width: double.infinity, // Ensures full width
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CounselingFormQ2_1()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.pink.shade700,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12), // Ensures same height
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: const Text("No",
+                          style: TextStyle(fontSize: 16, color: Colors.white)),
                     ),
-                    child: const Text("No",
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
                   ),
                 ],
               ),

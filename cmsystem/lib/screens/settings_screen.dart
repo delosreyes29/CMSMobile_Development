@@ -24,9 +24,9 @@ class SettingsScreen extends StatelessWidget {
         toolbarHeight: 80,
         elevation: 0,
         backgroundColor: Colors.pink.shade50,
-        title: Column(
+        title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             Text(
               "Welcome back !",
               style: TextStyle(
