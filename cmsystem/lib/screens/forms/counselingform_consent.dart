@@ -1,9 +1,13 @@
 import 'package:cmsystem/screens/forms/counselingform_q1.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:cmsystem/screens/home_screen.dart';
 import 'package:cmsystem/screens/notification/notification_screen_zero.dart';
 import 'package:cmsystem/screens/schedule_screen.dart';
 import 'package:cmsystem/screens/settings_screen.dart';
+=======
+import 'package:cmsystem/main.dart'; // import MainScreen to navigate back
+>>>>>>> 34af5736851d31931a293e90324ca237a7d5d092
 
 class CounselingFormConsent extends StatefulWidget {
   const CounselingFormConsent({super.key});
@@ -15,6 +19,7 @@ class CounselingFormConsent extends StatefulWidget {
 class _CounselingFormConsentState extends State<CounselingFormConsent> {
   bool _isChecked = false;
 
+<<<<<<< HEAD
   void _navigateToScreen(int index) {
     switch (index) {
       case 0:
@@ -50,6 +55,15 @@ class _CounselingFormConsentState extends State<CounselingFormConsent> {
         );
         break;
     }
+=======
+  void _navigateToMainScreen(int index) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MainScreen(initialIndex: index),
+      ),
+    );
+>>>>>>> 34af5736851d31931a293e90324ca237a7d5d092
   }
 
   @override

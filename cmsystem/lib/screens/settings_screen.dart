@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import 'package:cmsystem/screens/forms/counselingform_consent.dart';
+=======
+>>>>>>> 34af5736851d31931a293e90324ca237a7d5d092
 import 'package:flutter/material.dart';
 import 'package:cmsystem/screens/home_screen.dart';
 import 'package:cmsystem/screens/notification/notification_screen_zero.dart';
@@ -174,7 +177,11 @@ class SettingsScreen extends StatelessWidget {
       title: Text(title),
       trailing: const Icon(Icons.arrow_outward),
       onTap: () {
+<<<<<<< HEAD
         // Navigation logic if needed
+=======
+        // nav
+>>>>>>> 34af5736851d31931a293e90324ca237a7d5d092
       },
     );
   }
