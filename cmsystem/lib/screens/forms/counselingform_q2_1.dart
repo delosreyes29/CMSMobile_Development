@@ -63,14 +63,6 @@ class _CounselingFormQ2_1State extends State<CounselingFormQ2_1> {
               ),
               const SizedBox(height: 20),
               _buildTimeSelection(),
-              // _buildTextField('Course & Year'),
-              // _buildTextField('College Department'),
-              // _buildTextField('Date of Birth'),
-              // _buildTextField('Age / Sex'),
-              // _buildTextField('Contact No.'),
-              // _buildTextField('Present Address'),
-              // _buildTextField('Emergency contact person'),
-              // _buildTextField('Emergency contact person’s contact no.'),
               const SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
@@ -125,20 +117,19 @@ class _CounselingFormQ2_1State extends State<CounselingFormQ2_1> {
           _focusedDay = focusedDay;
         });
       },
-      headerStyle: HeaderStyle(
+      headerStyle: const HeaderStyle(
         formatButtonVisible: false,
         titleCentered: true,
-        titleTextStyle:
-            const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        leftChevronIcon: const Icon(Icons.chevron_left, color: Colors.black),
-        rightChevronIcon: const Icon(Icons.chevron_right, color: Colors.black),
+        titleTextStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        leftChevronIcon: Icon(Icons.chevron_left, color: Colors.black),
+        rightChevronIcon: Icon(Icons.chevron_right, color: Colors.black),
       ),
       calendarStyle: CalendarStyle(
         todayDecoration: BoxDecoration(
           color: Colors.pink.shade200,
           shape: BoxShape.circle,
         ),
-        selectedDecoration: BoxDecoration(
+        selectedDecoration: const BoxDecoration(
           color: Colors.pink,
           shape: BoxShape.circle,
         ),

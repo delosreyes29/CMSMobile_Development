@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:cmsystem/screens/forms/counselingform_q10.dart';
 
 class CounselingFormQ9 extends StatefulWidget {
-  const CounselingFormQ9({Key? key}) : super(key: key);
+  const CounselingFormQ9({super.key});
 
   @override
   State<CounselingFormQ9> createState() => _CounselingFormQ9State();
 }
 
 class _CounselingFormQ9State extends State<CounselingFormQ9> {
-  // Checkbox state
   Map<String, bool> concerns = {
     'I cannot accept that my parents are separated.': false,
     'I have a hard time dealing with my parents/guardian’s expectations and demands.':
@@ -22,7 +21,6 @@ class _CounselingFormQ9State extends State<CounselingFormQ9> {
     'I am worried/troubled by a family member’s illness.': false,
   };
 
-  // Violence checkboxes
   Map<String, bool> violence = {
     'Physical': false,
     'Emotional': false,
@@ -62,7 +60,7 @@ class _CounselingFormQ9State extends State<CounselingFormQ9> {
             ),
             const SizedBox(height: 20),
 
-            // Checkboxes
+            // checkboxes
             ...concerns.entries.map((entry) {
               return CheckboxListTile(
                 title: Text(entry.key),
@@ -75,7 +73,6 @@ class _CounselingFormQ9State extends State<CounselingFormQ9> {
               );
             }),
 
-            // TextField - I have difficulty opening up to family
             const SizedBox(height: 10),
             const Text("I have difficulty opening up to family member/s."),
             const SizedBox(height: 5),
@@ -94,7 +91,6 @@ class _CounselingFormQ9State extends State<CounselingFormQ9> {
             ),
             const SizedBox(height: 5),
 
-            // Violence checkboxes
             Wrap(
               spacing: 10,
               children: violence.entries.map((entry) {
@@ -117,7 +113,7 @@ class _CounselingFormQ9State extends State<CounselingFormQ9> {
 
             const SizedBox(height: 40),
 
-            // Next Button
+            // next button
             Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(

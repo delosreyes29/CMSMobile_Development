@@ -1,6 +1,6 @@
 import 'package:cmsystem/screens/forms/counselingform_q1.dart';
 import 'package:flutter/material.dart';
-import 'package:cmsystem/main.dart'; // Import MainScreen to navigate back
+import 'package:cmsystem/main.dart'; // import MainScreen to navigate back
 
 class CounselingFormConsent extends StatefulWidget {
   const CounselingFormConsent({super.key});
@@ -16,8 +16,7 @@ class _CounselingFormConsentState extends State<CounselingFormConsent> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) =>
-            MainScreen(initialIndex: index), // Pass selected index
+        builder: (context) => MainScreen(initialIndex: index),
       ),
     );
   }

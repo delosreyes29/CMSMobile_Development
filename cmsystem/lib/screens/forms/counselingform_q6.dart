@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cmsystem/screens/forms/counselingform_q7.dart';
 
 class CounselingFormQ6 extends StatefulWidget {
-  const CounselingFormQ6({Key? key}) : super(key: key);
+  const CounselingFormQ6({super.key});
 
   @override
   State<CounselingFormQ6> createState() => _CounselingFormQ6State();
@@ -188,7 +188,7 @@ class _CounselingFormQ6State extends State<CounselingFormQ6> {
           ),
         ],
         onTap: (index) {
-          // Add navigation logic here if needed
+          // nav
         },
       ),
     );

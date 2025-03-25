@@ -8,7 +8,7 @@ class CounselingFormQ1 extends StatelessWidget {
   void _navigateToQ2(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => CounselingFormQ2()),
+      MaterialPageRoute(builder: (context) => const CounselingFormQ2()),
     );
   }
 
@@ -44,19 +44,18 @@ class CounselingFormQ1 extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(
-                    width: double.infinity, // Ensures full width
+                    width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CounselingFormQ2()),
+                              builder: (context) => const CounselingFormQ2()),
                         );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.pink.shade700,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 12), // Ensures same height
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -67,19 +66,18 @@ class CounselingFormQ1 extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   SizedBox(
-                    width: double.infinity, // Ensures full width
+                    width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CounselingFormQ2_1()),
+                              builder: (context) => const CounselingFormQ2_1()),
                         );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.pink.shade700,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 12), // Ensures same height
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),

@@ -87,16 +87,6 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
                       );
                     }
                   },
-
-                  // onPressed: () {
-                  //   if (_selectedDay == null) {
-                  //     ScaffoldMessenger.of(context).showSnackBar(
-                  //       const SnackBar(content: Text('Please select a date')),
-                  //     );
-                  //   } else {
-                  //     // Navigate to next screen or process form
-                  //   }
-                  // },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.pink.shade700,
                     padding: const EdgeInsets.symmetric(
@@ -141,20 +131,19 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
           _focusedDay = focusedDay;
         });
       },
-      headerStyle: HeaderStyle(
+      headerStyle: const HeaderStyle(
         formatButtonVisible: false,
         titleCentered: true,
-        titleTextStyle:
-            const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        leftChevronIcon: const Icon(Icons.chevron_left, color: Colors.black),
-        rightChevronIcon: const Icon(Icons.chevron_right, color: Colors.black),
+        titleTextStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        leftChevronIcon: Icon(Icons.chevron_left, color: Colors.black),
+        rightChevronIcon: Icon(Icons.chevron_right, color: Colors.black),
       ),
       calendarStyle: CalendarStyle(
         todayDecoration: BoxDecoration(
           color: Colors.pink.shade200,
           shape: BoxShape.circle,
         ),
-        selectedDecoration: BoxDecoration(
+        selectedDecoration: const BoxDecoration(
           color: Colors.pink,
           shape: BoxShape.circle,
         ),

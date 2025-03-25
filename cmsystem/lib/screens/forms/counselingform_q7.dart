@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cmsystem/screens/forms/counselingform_q8.dart';
 
 class CounselingFormQ7 extends StatefulWidget {
-  const CounselingFormQ7({Key? key}) : super(key: key);
+  const CounselingFormQ7({super.key});
 
   @override
   State<CounselingFormQ7> createState() => _CounselingFormQ7State();
@@ -18,7 +18,7 @@ class _CounselingFormQ7State extends State<CounselingFormQ7> {
     setState(() {
       _currentIndex = index;
     });
-    // Implement navigation based on index if needed
+    // nav
   }
 
   @override

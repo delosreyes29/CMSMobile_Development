@@ -1,16 +1,3 @@
-// import 'package:flutter/material.dart';
-
-// class SettingsScreen extends StatelessWidget {
-//   const SettingsScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Scaffold(
-//       body: Center(child: Text('Settings Screen')),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -100,35 +87,8 @@ class SettingsScreen extends StatelessWidget {
       title: Text(title),
       trailing: const Icon(Icons.arrow_outward),
       onTap: () {
-        // Add navigation or logic for each setting item
+        // nav
       },
     );
   }
-
-  // Widget _buildBottomNavBar(BuildContext context) {
-  //   return BottomNavigationBar(
-  //     currentIndex: 4,
-  //     onTap: (index) {
-  //       if (index == 3) {
-  //         // Redirect to this screen when clicking "Schedule"
-  //         Navigator.push(
-  //           context,
-  //           MaterialPageRoute(builder: (context) => const SettingsScreen()),
-  //         );
-  //       }
-  //     },
-  //     backgroundColor: Colors.pink.shade50,
-  //     selectedItemColor: Colors.pink.shade700,
-  //     unselectedItemColor: Colors.grey,
-  //     items: const [
-  //       BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-  //       BottomNavigationBarItem(
-  //           icon: Icon(Icons.notifications), label: 'Notif'),
-  //       BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: ''),
-  //       BottomNavigationBarItem(
-  //           icon: Icon(Icons.calendar_today), label: 'Schedule'),
-  //       BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
-  //     ],
-  //   );
-  // }
 }
