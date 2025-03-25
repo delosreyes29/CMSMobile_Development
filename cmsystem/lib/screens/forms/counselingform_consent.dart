@@ -115,11 +115,15 @@ class _CounselingFormConsentState extends State<CounselingFormConsent> {
                       }
                     : null,
                 style: ElevatedButton.styleFrom(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 80, vertical: 16),
                   backgroundColor: Colors.pink.shade700,
-                  minimumSize: const Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
                 child: const Text(
-                  "Next",
+                  'Next',
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ),
@@ -128,7 +132,7 @@ class _CounselingFormConsentState extends State<CounselingFormConsent> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 2, // Set the current index to Counseling Form
+        currentIndex: 2,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.pink.shade700,
         unselectedItemColor: Colors.grey,

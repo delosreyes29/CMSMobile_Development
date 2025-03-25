@@ -7,7 +7,7 @@ class CounselingFormQ10 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFEFD6DD),
+        backgroundColor: Colors.pink.shade100,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -15,10 +15,8 @@ class CounselingFormQ10 extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
-          'Preview & Submit',
-          style: TextStyle(color: Colors.black),
-        ),
+        title: const Text('Preview & Submit',
+            style: TextStyle(fontWeight: FontWeight.bold)),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -66,16 +64,16 @@ class CounselingFormQ10 extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF7B1F3A),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+                  backgroundColor: Colors.pink.shade700,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
                 child: const Text(
                   'Submit',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ),
             ),

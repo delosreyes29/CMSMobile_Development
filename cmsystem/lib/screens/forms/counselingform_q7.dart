@@ -86,14 +86,14 @@ class _CounselingFormQ7State extends State<CounselingFormQ7> {
                 style: ElevatedButton.styleFrom(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 80, vertical: 16),
-                  backgroundColor: const Color(0xFF7B2D43),
+                  backgroundColor: Colors.pink.shade700,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
                 child: const Text(
                   'Next',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ),
             ),

@@ -207,13 +207,17 @@ class _CounselingFormQ5State extends State<CounselingFormQ5> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF7B1F4F),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
+                      const EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+                  backgroundColor: Colors.pink.shade700,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
-                child: const Text("Next", style: TextStyle(fontSize: 16)),
+                child: const Text(
+                  'Next',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
               ),
             ),
             const SizedBox(height: 20),

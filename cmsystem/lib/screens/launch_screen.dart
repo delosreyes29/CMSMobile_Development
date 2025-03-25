@@ -32,7 +32,18 @@ class LaunchScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
               },
-              child: const Text('Get Started'),
+              style: ElevatedButton.styleFrom(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+                backgroundColor: Colors.pink.shade700,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              child: const Text(
+                'Get Started',
+                style: TextStyle(fontSize: 16, color: Colors.white),
+              ),
             ),
           ],
         ),

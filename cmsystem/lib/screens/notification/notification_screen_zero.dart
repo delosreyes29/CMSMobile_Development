@@ -10,45 +10,111 @@ class NotificationScreenZero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          "Welcome back !",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-        ),
-        centerTitle: false,
-      ),
-      body: Center(
+      // backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.all(20),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset('assets/no_notif.png', height: 150),
-            const SizedBox(height: 20),
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.pink.shade100,
+                  radius: 25,
+                ),
+                const SizedBox(width: 12), // Adjusted spacing
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Welcome back !',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      'Student Name',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            const SizedBox(height: 30),
+
+            // Title
             const Text(
-              "No new notifications",
+              "Notifications",
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
+                color: Color(0xFF660033),
               ),
             ),
-            const SizedBox(height: 10),
-            const Text(
-              "There are no new notifications from the guidance council office.",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
+            const SizedBox(height: 24),
+
+            // Row(
+            //   children: [
+            //     CircleAvatar(
+            //       backgroundColor: Colors.pink.shade100,
+            //       radius: 25,
+            //     ),
+            //     const SizedBox(width: 10),
+            //     const Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: [
+            //         Text('Welcome back !',
+            //             style: TextStyle(
+            //                 fontSize: 16, fontWeight: FontWeight.bold)),
+            //         Text('Student Name',
+            //             style: TextStyle(fontSize: 14, color: Colors.grey)),
+            //       ],
+            //     )
+            //   ],
+            // ),
+            // const SizedBox(height: 20),
+            // const Text('Counseling Monitoring System',
+            //     style: TextStyle(
+            //         fontSize: 22,
+            //         fontWeight: FontWeight.bold,
+            //         color: Colors.brown)),
+            // const SizedBox(height: 10),
+
+            Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/no_notif.png', height: 150),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "No new notifications",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      "There are no new notifications from the guidance council office.",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
-              textAlign: TextAlign.center,
             ),
           ],
         ),
       ),
-
-      // Updated Bottom Navigation Bar
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 1, // Notifications is index 1
         type: BottomNavigationBarType.fixed,
@@ -63,8 +129,7 @@ class NotificationScreenZero extends StatelessWidget {
               );
               break;
             case 1:
-              // Stay on the same page (Notifications)
-              break;
+              break; // Stay on Notifications screen
             case 2:
               Navigator.pushReplacement(
                 context,
@@ -96,7 +161,7 @@ class NotificationScreenZero extends StatelessWidget {
             label: 'Notifications',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle, size: 40), // Plus Button
+            icon: Icon(Icons.add_circle, size: 40),
             label: '',
           ),
           BottomNavigationBarItem(

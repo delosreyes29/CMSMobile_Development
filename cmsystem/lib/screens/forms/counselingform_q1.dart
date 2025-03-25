@@ -91,14 +91,17 @@ class CounselingFormQ1 extends StatelessWidget {
                         );
                       },
                       style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 80, vertical: 16),
                         backgroundColor: Colors.pink.shade700,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      child: const Text('Yes',
-                          style: TextStyle(fontSize: 16, color: Colors.white)),
+                      child: const Text(
+                        'Yes',
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -113,14 +116,17 @@ class CounselingFormQ1 extends StatelessWidget {
                         );
                       },
                       style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 80, vertical: 16),
                         backgroundColor: Colors.pink.shade700,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      child: const Text("No",
-                          style: TextStyle(fontSize: 16, color: Colors.white)),
+                      child: const Text(
+                        'No',
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
                     ),
                   ),
                 ],
@@ -130,7 +136,7 @@ class CounselingFormQ1 extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 2, // Set the current index to Counseling Form
+        currentIndex: 2,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.pink.shade700,
         unselectedItemColor: Colors.grey,

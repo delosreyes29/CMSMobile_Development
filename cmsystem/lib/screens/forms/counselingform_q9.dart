@@ -117,11 +117,12 @@ class _CounselingFormQ9State extends State<CounselingFormQ9> {
             Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF7A1D42),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+                  backgroundColor: Colors.pink.shade700,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
                 onPressed: () {
                   Navigator.push(
@@ -130,7 +131,10 @@ class _CounselingFormQ9State extends State<CounselingFormQ9> {
                         builder: (context) => const CounselingFormQ10()),
                   );
                 },
-                child: const Text('Next', style: TextStyle(fontSize: 16)),
+                child: const Text(
+                  'Next',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
               ),
             ),
           ],

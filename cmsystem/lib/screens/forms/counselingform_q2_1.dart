@@ -1,6 +1,12 @@
+//data duplication question (no, user has requested a session before)
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:cmsystem/screens/forms/counselingform_q3.dart';
+import 'package:cmsystem/screens/home_screen.dart';
+import 'package:cmsystem/screens/notification/notification_screen_zero.dart';
+import 'package:cmsystem/screens/forms/counselingform_consent.dart';
+import 'package:cmsystem/screens/schedule_screen.dart';
+import 'package:cmsystem/screens/settings_screen.dart';
 
 class CounselingFormQ2_1 extends StatefulWidget {
   const CounselingFormQ2_1({super.key});
@@ -13,7 +19,7 @@ class _CounselingFormQ2_1State extends State<CounselingFormQ2_1> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   String? selectedTime;
-  List<String> fullyBookedTimes = ['15:00-16:00'];
+  List<String> fullyBookedTimes = [];
 
   final List<DateTime> fullyBookedDates = [
     DateTime(2024, 10, 5),
@@ -74,15 +80,17 @@ class _CounselingFormQ2_1State extends State<CounselingFormQ2_1> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.pink.shade700,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 40, vertical: 12),
+                        horizontal: 80, vertical: 16),
+                    backgroundColor: Colors.pink.shade700,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-                  child: const Text('Next',
-                      style: TextStyle(fontSize: 16, color: Colors.white)),
+                  child: const Text(
+                    'Next',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
                 ),
               ),
             ],
@@ -208,9 +216,41 @@ class _CounselingFormQ2_1State extends State<CounselingFormQ2_1> {
 
   Widget _buildBottomNavBar() {
     return BottomNavigationBar(
-      backgroundColor: Colors.pink.shade100,
       selectedItemColor: Colors.pink.shade700,
       unselectedItemColor: Colors.grey,
+      type: BottomNavigationBarType.fixed,
+      onTap: (index) {
+        switch (index) {
+          case 0:
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()));
+            break;
+          case 1:
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NotificationScreenZero()));
+            break;
+          case 2:
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const CounselingFormConsent()));
+            break;
+          case 3:
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ScheduleScreen()));
+            break;
+          case 4:
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const SettingsScreen()));
+            break;
+        }
+      },
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         BottomNavigationBarItem(

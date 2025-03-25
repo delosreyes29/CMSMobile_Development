@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cmsystem/screens/home_screen.dart';
 import 'package:cmsystem/screens/notification/notification_screen_zero.dart';
 import 'package:cmsystem/screens/schedule_screen.dart';
+import 'package:cmsystem/screens/login.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -10,7 +11,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFDF5F7),
+      // backgroundColor: const Color(0xFFFDF5F7),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -82,17 +83,23 @@ class SettingsScreen extends StatelessWidget {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    // Add logout functionality here
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()),
+                      (route) => false, // This removes all previous routes
+                    );
                   },
                   style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 80, vertical: 16),
                     backgroundColor: Colors.pink.shade700,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    minimumSize: const Size(double.infinity, 50),
                   ),
                   child: const Text(
-                    "Logout",
+                    'Logout',
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),

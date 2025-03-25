@@ -16,7 +16,6 @@ class _CounselingFormQ4State extends State<CounselingFormQ4> {
   final TextEditingController _q5Controller = TextEditingController();
   final TextEditingController _q6Controller = TextEditingController();
   final TextEditingController _q7Controller = TextEditingController();
-  final TextEditingController _q8Controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +83,9 @@ class _CounselingFormQ4State extends State<CounselingFormQ4> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF8B1E41),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 60, vertical: 14),
+                      const EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+                  backgroundColor: Colors.pink.shade700,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),

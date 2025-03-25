@@ -55,7 +55,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFDF5F7),
+      // backgroundColor: const Color(0xFFFDF5F7),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
@@ -68,29 +68,42 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                     backgroundColor: Colors.pink.shade100,
                     radius: 25,
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 12), // Adjusted spacing
                   const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Welcome back !',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
-                      Text('Student Name',
-                          style: TextStyle(fontSize: 14, color: Colors.grey)),
+                      Text(
+                        'Welcome back !',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        'Student Name',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                        ),
+                      ),
                     ],
                   )
                 ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 30),
+
+              // Title
               const Text(
-                'Counseling Session Schedule',
+                "Counseling Session Schedule",
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF660033),
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 24),
+
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
@@ -232,7 +245,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             label: 'Notifications',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle, size: 40, color: Colors.pink),
+            icon: Icon(Icons.add_circle, size: 40),
             label: '',
           ),
           BottomNavigationBarItem(

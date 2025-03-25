@@ -119,14 +119,17 @@ class _CounselingFormQ8State extends State<CounselingFormQ8> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF6B0D1D),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+                  backgroundColor: Colors.pink.shade700,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
-                child:
-                    const Text('Next', style: TextStyle(color: Colors.white)),
+                child: const Text(
+                  'Next',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
               ),
             ),
           ],

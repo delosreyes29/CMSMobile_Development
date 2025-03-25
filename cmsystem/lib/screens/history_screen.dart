@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:cmsystem/screens/home_screen.dart';
+import 'package:cmsystem/screens/notification/notification_screen_Zero.dart';
+import 'package:cmsystem/screens/forms/counselingform_consent.dart';
+import 'package:cmsystem/screens/schedule_screen.dart';
+import 'package:cmsystem/screens/settings_screen.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
@@ -6,7 +11,7 @@ class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(80.0),
         child: _buildAppBar(),
@@ -14,16 +19,16 @@ class HistoryScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Text(
-              "Counseling Session History",
-              style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
-          ),
+          // const Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: 20.0),
+          //   child: Text(
+          //     "Counseling Session History",
+          //     style: TextStyle(
+          //         fontSize: 22,
+          //         fontWeight: FontWeight.bold,
+          //         color: Colors.black),
+          //   ),
+          // ),
           const SizedBox(height: 10),
           _buildSemesterDropdown(),
           const SizedBox(height: 10),
@@ -32,34 +37,21 @@ class HistoryScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(),
+      bottomNavigationBar: _buildBottomNavigationBar(context),
     );
   }
 
   Widget _buildAppBar() {
     return AppBar(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       elevation: 0,
-      title: Row(
-        children: [
-          CircleAvatar(
-            backgroundColor: Colors.grey[300], // Placeholder for profile image
-            radius: 20,
-          ),
-          const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text("Welcome back!",
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black)),
-              Text("Student Name",
-                  style: TextStyle(fontSize: 12, color: Colors.grey[700])),
-            ],
-          )
-        ],
+      title: const Text(
+        "Counseling Session History",
+        style: TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+          color: Color(0xFF660033),
+        ),
       ),
     );
   }
@@ -147,22 +139,57 @@ class HistoryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar() {
+  Widget _buildBottomNavigationBar(BuildContext context) {
     return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      // backgroundColor: Colors.white,
+      selectedItemColor: Colors.pink.shade700,
+      unselectedItemColor: Colors.grey,
+      showUnselectedLabels: true,
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
         BottomNavigationBarItem(
             icon: Icon(Icons.notifications), label: "Notif"),
         BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle, size: 40, color: Colors.pink),
-            label: ""),
+          icon: Icon(Icons.add_circle, size: 40, color: Colors.pink),
+          label: "",
+        ),
         BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today), label: "Schedule"),
         BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Settings"),
       ],
-      selectedItemColor: Colors.pink,
-      unselectedItemColor: Colors.grey,
-      showUnselectedLabels: true,
+      onTap: (index) {
+        switch (index) {
+          case 0:
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()));
+            break;
+          case 1:
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NotificationScreenZero()));
+            break;
+          case 2:
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const CounselingFormConsent()));
+            break;
+          case 3:
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ScheduleScreen()));
+            break;
+          case 4:
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const SettingsScreen()));
+            break;
+        }
+      },
     );
   }
 }

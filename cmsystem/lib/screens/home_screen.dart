@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: 'Notif'),
+              icon: Icon(Icons.notifications), label: 'Notifications'),
           BottomNavigationBarItem(
               icon: Icon(Icons.add_circle, size: 40), label: ''),
           BottomNavigationBarItem(
@@ -74,26 +74,42 @@ class HomeScreen extends StatelessWidget {
                   backgroundColor: Colors.pink.shade100,
                   radius: 25,
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: 12), // Adjusted spacing
                 const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Welcome back !',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold)),
-                    Text('Student Name',
-                        style: TextStyle(fontSize: 14, color: Colors.grey)),
+                    Text(
+                      'Welcome back !',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      'Student Name',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
+                    ),
                   ],
                 )
               ],
             ),
-            const SizedBox(height: 20),
-            const Text('Counseling Monitoring System',
-                style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.brown)),
-            const SizedBox(height: 10),
+            const SizedBox(height: 30),
+
+            // Title
+            const Text(
+              "Counseling Monitoring System",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF660033),
+              ),
+            ),
+            const SizedBox(height: 24),
+
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
