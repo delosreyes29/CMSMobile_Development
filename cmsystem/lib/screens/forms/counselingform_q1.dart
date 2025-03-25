@@ -10,7 +10,6 @@ import 'counselingform_q2_1.dart';
 class CounselingFormQ1 extends StatelessWidget {
   const CounselingFormQ1({super.key});
 
-<<<<<<< HEAD
   void _navigateToScreen(BuildContext context, int index) {
     switch (index) {
       case 0:
@@ -46,13 +45,6 @@ class CounselingFormQ1 extends StatelessWidget {
         );
         break;
     }
-=======
-  void _navigateToQ2(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const CounselingFormQ2()),
-    );
->>>>>>> 34af5736851d31931a293e90324ca237a7d5d092
   }
 
   @override
