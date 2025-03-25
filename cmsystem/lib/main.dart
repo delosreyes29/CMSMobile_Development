@@ -1,15 +1,20 @@
-import 'package:cmsystem/screens/launch_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:cmsystem/screens/launch_screen.dart';
 import 'package:cmsystem/screens/home_screen.dart';
-import 'package:cmsystem/screens/notification/notification_screen_zero.dart';
 import 'package:cmsystem/screens/schedule_screen.dart';
+import 'package:cmsystem/screens/history_screen.dart';
 import 'package:cmsystem/screens/settings_screen.dart';
+import 'package:cmsystem/screens/notification/notification_screen_zero.dart';
 import 'package:cmsystem/screens/forms/counselingform_consent.dart';
-// import 'package:cmsystem/screens/settings/settings_screen.dart';
-// import 'package:cmsystem/screens/forms/counselingform_q1.dart';
-// import 'package:cmsystem/screens/forms/counselingform_q2.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MyApp());
 }
 
@@ -18,15 +23,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const LaunchScreen(),
+      initialRoute: '/launch',
+      routes: {
+        '/launch': (context) => const LaunchScreen(),
+        '/home': (context) => const MainScreen(initialIndex: 0),
+        '/notifications': (context) => const MainScreen(initialIndex: 1),
+        '/schedule': (context) => const MainScreen(initialIndex: 3),
+        '/history': (context) => const HistoryScreen(),
+        '/settings': (context) => const MainScreen(initialIndex: 4),
+        '/counseling_form': (context) => const CounselingFormConsent(),
+      },
     );
   }
 }
 
 class MainScreen extends StatefulWidget {
-  final int initialIndex; //selected tab
+  final int initialIndex;
 
   const MainScreen({super.key, this.initialIndex = 0});
 
@@ -40,7 +54,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _screens = [
     const HomeScreen(),
     const NotificationScreenZero(),
-    const Placeholder(), // + button
+    const Placeholder(), // Placeholder for + button
     const ScheduleScreen(),
     const SettingsScreen(),
   ];
@@ -48,16 +62,13 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    _selectedIndex = widget.initialIndex; // back
+    _selectedIndex = widget.initialIndex;
   }
 
   void _onItemTapped(int index) {
     if (index == 2) {
-      // navigate to Counseling Form when clicking the + button
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const CounselingFormConsent()),
-      );
+      // Navigate to Counseling Form when clicking the + button
+      Navigator.pushNamed(context, '/counseling_form');
     } else {
       setState(() {
         _selectedIndex = index;

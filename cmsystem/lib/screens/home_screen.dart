@@ -3,9 +3,6 @@ import 'package:cmsystem/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cmsystem/screens/notification/notification_screen_zero.dart';
 import 'package:cmsystem/screens/forms/counselingform_consent.dart';
-import 'package:cmsystem/screens/schedule_screen.dart';
-import 'package:cmsystem/screens/settings_screen.dart';
-import 'home_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

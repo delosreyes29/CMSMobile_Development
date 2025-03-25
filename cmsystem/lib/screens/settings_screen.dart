@@ -1,17 +1,8 @@
-// import 'package:flutter/material.dart';
-
-// class SettingsScreen extends StatelessWidget {
-//   const SettingsScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Scaffold(
-//       body: Center(child: Text('Settings Screen')),
-//     );
-//   }
-// }
-
+import 'package:cmsystem/screens/forms/counselingform_consent.dart';
 import 'package:flutter/material.dart';
+import 'package:cmsystem/screens/home_screen.dart';
+import 'package:cmsystem/screens/notification/notification_screen_zero.dart';
+import 'package:cmsystem/screens/schedule_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -19,78 +10,161 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        toolbarHeight: 80,
-        elevation: 0,
-        backgroundColor: Colors.pink.shade50,
-        title: const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Welcome back !",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.brown,
-                  fontSize: 16),
-            ),
-            Text(
-              "Student Name",
-              style: TextStyle(color: Colors.black54, fontSize: 14),
-            ),
-          ],
-        ),
-        leading: const CircleAvatar(
-          radius: 20,
-          backgroundColor: Colors.pink,
-          child: Icon(Icons.person, color: Colors.white),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 10),
-            const Text(
-              "Settings",
-              style: TextStyle(
+      backgroundColor: const Color(0xFFFDF5F7),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: 20.0, vertical: 16), // Adjusted margins
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // User Info Section (Matching Home Screen)
+              Row(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.pink.shade100,
+                    radius: 25,
+                  ),
+                  const SizedBox(width: 12), // Adjusted spacing
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Welcome back !',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        'Student Name',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              const SizedBox(height: 30), // Adjusted spacing
+
+              // Settings Title
+              const Text(
+                "Settings",
+                style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: Colors.brown),
-            ),
-            const SizedBox(height: 20),
-            const Text("Account",
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            _buildSettingsItem("Change Display Icon"),
-            const Divider(),
-            const Text("Support",
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            _buildSettingsItem("Help center"),
-            _buildSettingsItem("App feedback"),
-            const Spacer(),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  // Add logout functionality here
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.brown.shade900,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  minimumSize: const Size(double.infinity, 50),
-                ),
-                child: const Text(
-                  "Logout",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  color: Color(0xFF660033),
                 ),
               ),
-            ),
-          ],
+              const SizedBox(height: 24), // Adjusted spacing
+
+              // Account Section
+              const Text(
+                "Account",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              _buildSettingsItem("Change Display Icon"),
+              const Divider(),
+
+              // Support Section
+              const Text(
+                "Support",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              _buildSettingsItem("Help center"),
+              _buildSettingsItem("App feedback"),
+              const Spacer(),
+
+              // Logout Button
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Add logout functionality here
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.pink.shade700,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    minimumSize: const Size(double.infinity, 50),
+                  ),
+                  child: const Text(
+                    "Logout",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30), // Adjusted spacing
+            ],
+          ),
         ),
       ),
-      // bottomNavigationBar: _buildBottomNavBar(context),
+
+      // Bottom Navigation Bar
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 4, // Settings is index 4
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.pink,
+        unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()),
+              );
+              break;
+            case 1:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NotificationScreenZero()),
+              );
+              break;
+            case 2:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const CounselingFormConsent()),
+              );
+              break;
+            case 3:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const ScheduleScreen()),
+              );
+              break;
+            case 4:
+              // Stay on Settings page
+              break;
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'Notifications',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_circle, size: 40), // Plus Button
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.schedule),
+            label: 'Schedule',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+        ],
+      ),
     );
   }
 
@@ -100,35 +174,8 @@ class SettingsScreen extends StatelessWidget {
       title: Text(title),
       trailing: const Icon(Icons.arrow_outward),
       onTap: () {
-        // Add navigation or logic for each setting item
+        // Navigation logic if needed
       },
     );
   }
-
-  // Widget _buildBottomNavBar(BuildContext context) {
-  //   return BottomNavigationBar(
-  //     currentIndex: 4,
-  //     onTap: (index) {
-  //       if (index == 3) {
-  //         // Redirect to this screen when clicking "Schedule"
-  //         Navigator.push(
-  //           context,
-  //           MaterialPageRoute(builder: (context) => const SettingsScreen()),
-  //         );
-  //       }
-  //     },
-  //     backgroundColor: Colors.pink.shade50,
-  //     selectedItemColor: Colors.pink.shade700,
-  //     unselectedItemColor: Colors.grey,
-  //     items: const [
-  //       BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-  //       BottomNavigationBarItem(
-  //           icon: Icon(Icons.notifications), label: 'Notif'),
-  //       BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: ''),
-  //       BottomNavigationBarItem(
-  //           icon: Icon(Icons.calendar_today), label: 'Schedule'),
-  //       BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
-  //     ],
-  //   );
-  // }
 }

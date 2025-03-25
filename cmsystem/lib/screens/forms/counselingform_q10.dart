@@ -64,7 +64,6 @@ class CounselingFormQ10 extends StatelessWidget {
                       content: Text('Form Submitted Successfully!'),
                     ),
                   );
-                  // Optionally navigate to another screen or reset form
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF7B1F3A),
@@ -100,7 +99,6 @@ class CounselingFormQ10 extends StatelessWidget {
     );
   }
 
-  // Reusable Widget to build each preview section
   Widget _buildPreviewSection(String title, String content) {
     return Container(
       margin: const EdgeInsets.only(bottom: 15),

@@ -106,7 +106,6 @@ class _CounselingFormQ4State extends State<CounselingFormQ4> {
         selectedItemColor: const Color(0xFF8B1E41),
         unselectedItemColor: Colors.grey,
         onTap: (index) {
-          // Add navigation functionality for each item
           switch (index) {
             case 0:
               // Navigate to Home

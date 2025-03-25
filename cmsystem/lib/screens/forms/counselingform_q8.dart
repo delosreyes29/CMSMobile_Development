@@ -19,7 +19,6 @@ class _CounselingFormQ8State extends State<CounselingFormQ8> {
   bool lateInClass = false;
   bool lessonDifficulty = false;
 
-  // Text field controllers
   final TextEditingController courseField = TextEditingController();
   final TextEditingController othersField = TextEditingController();
 
@@ -116,7 +115,7 @@ class _CounselingFormQ8State extends State<CounselingFormQ8> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            const CounselingFormQ9()), // next screen placeholder
+                            const CounselingFormQ9()), // next screen
                   );
                 },
                 style: ElevatedButton.styleFrom(
