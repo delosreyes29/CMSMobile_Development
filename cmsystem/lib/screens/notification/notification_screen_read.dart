@@ -1,3 +1,7 @@
+import 'package:cmsystem/screens/forms/counselingform_consent.dart';
+import 'package:cmsystem/screens/home_screen.dart';
+import 'package:cmsystem/screens/schedule_screen.dart';
+import 'package:cmsystem/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -22,8 +26,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context); // Get the app theme colors
-
     // Filter notifications based on selected filter
     List<Map<String, dynamic>> filteredNotifications = notifications
         .where((notif) => filter == 'All' || notif['status'] == filter)
@@ -159,20 +161,60 @@ class _NotificationScreenState extends State<NotificationScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.pink[400],
-        unselectedItemColor: Colors.grey[400],
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+        currentIndex: 1, // Notifications is index 1
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.pink,
+        unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()),
+              );
+              break;
+            case 1:
+              break; // Stay on Notifications screen
+            case 2:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const CounselingFormConsent()),
+              );
+              break;
+            case 3:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const ScheduleScreen()),
+              );
+              break;
+            case 4:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsScreen()),
+              );
+              break;
+          }
+        },
+        items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: "Notif"),
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.add_circle, size: 36), label: ""),
+            icon: Icon(Icons.notifications),
+            label: 'Notifications',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_circle, size: 40),
+            label: '',
+          ),
           BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today), label: 'Schedule'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: "Settings"),
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
         ],
       ),
     );

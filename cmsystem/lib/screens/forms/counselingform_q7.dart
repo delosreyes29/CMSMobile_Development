@@ -12,15 +12,6 @@ class _CounselingFormQ7State extends State<CounselingFormQ7> {
   final TextEditingController grievingController = TextEditingController();
   final TextEditingController experienceController = TextEditingController();
 
-  int _currentIndex = 0;
-
-  void _onBottomNavTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-    // nav
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
