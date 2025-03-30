@@ -138,9 +138,7 @@ class NotificationScreenZero extends StatelessWidget {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.schedule),
-            label: 'Schedule',
-          ),
+              icon: Icon(Icons.calendar_today), label: 'Schedule'),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Settings',

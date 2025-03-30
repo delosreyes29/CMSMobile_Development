@@ -49,11 +49,10 @@ class CounselingFormQ11 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Welcome Section - Consistent with Home Screen
             Row(
               children: [
                 CircleAvatar(
@@ -92,6 +91,8 @@ class CounselingFormQ11 extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    const SizedBox(height: 30),
+                    Image.asset('assets/survey.png', height: 150),
                     const Text(
                       'Request submitted!',
                       style: TextStyle(
@@ -106,8 +107,6 @@ class CounselingFormQ11 extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 16, color: Colors.black54),
                     ),
-                    const SizedBox(height: 30),
-                    Image.asset('assets/survey.png', height: 150),
                   ],
                 ),
               ),

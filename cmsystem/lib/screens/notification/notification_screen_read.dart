@@ -170,7 +170,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           BottomNavigationBarItem(
               icon: Icon(Icons.add_circle, size: 36), label: ""),
           BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today), label: "Schedule"),
+              icon: Icon(Icons.calendar_today), label: 'Schedule'),
           BottomNavigationBarItem(
               icon: Icon(Icons.settings), label: "Settings"),
         ],
