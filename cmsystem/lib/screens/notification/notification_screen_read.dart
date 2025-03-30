@@ -60,7 +60,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           fontWeight: FontWeight.bold,
                           color: Colors.brown[700]),
                     ),
-                    Text("Carlos Sainz",
+                    Text("User Name",
                         style: TextStyle(color: Colors.grey[600])),
                   ],
                 ),

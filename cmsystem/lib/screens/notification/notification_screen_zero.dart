@@ -35,7 +35,7 @@ class NotificationScreenZero extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Student Name',
+                      'User Name',
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey,

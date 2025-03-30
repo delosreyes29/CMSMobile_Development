@@ -74,7 +74,7 @@ class CounselingFormQ11 extends StatelessWidget {
                     ),
                     SizedBox(height: 2), // Ensures consistency in spacing
                     Text(
-                      'Student Name',
+                      'User Name',
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey,

@@ -81,7 +81,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                         ),
                       ),
                       Text(
-                        'Student Name',
+                        'User Name',
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.grey,
