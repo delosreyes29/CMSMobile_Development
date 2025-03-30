@@ -1,3 +1,4 @@
+import 'package:cmsystem/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'home_screen.dart';
@@ -89,9 +90,17 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 10),
               TextButton(
-                onPressed: () {},
-                child: const Text('Forgot the password?',
-                    style: TextStyle(color: Colors.pinkAccent)),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SignUpScreen()),
+                  );
+                },
+                child: const Text(
+                  'Create an account',
+                  style: TextStyle(color: Colors.pinkAccent),
+                ),
               ),
             ],
           ),

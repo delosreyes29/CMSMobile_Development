@@ -39,7 +39,7 @@ class _CounselingFormQ7State extends State<CounselingFormQ7> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("III. Grief/Bereavement",
+            const Text("IV. Grief/Bereavement",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -100,22 +100,6 @@ class _CounselingFormQ7State extends State<CounselingFormQ7> {
             const SizedBox(height: 20),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: _onBottomNavTapped,
-        selectedItemColor: const Color(0xFF7B2D43),
-        unselectedItemColor: Colors.pink.shade100,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: 'Notif'),
-          BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: ''),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today), label: 'Schedule'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: 'Settings'),
-        ],
       ),
     );
   }

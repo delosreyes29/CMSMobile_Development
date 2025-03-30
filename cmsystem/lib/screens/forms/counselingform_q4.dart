@@ -100,40 +100,6 @@ class _CounselingFormQ4State extends State<CounselingFormQ4> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.pink.shade100,
-        selectedItemColor: const Color(0xFF8B1E41),
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              // Navigate to Home
-              break;
-            case 1:
-              // Navigate to Notifications
-              break;
-            case 2:
-              // Add new record
-              break;
-            case 3:
-              // Navigate to Schedule
-              break;
-            case 4:
-              // Navigate to Settings
-              break;
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: 'Notif'),
-          BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: ''),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today), label: 'Schedule'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: 'Settings'),
-        ],
-      ),
     );
   }
 

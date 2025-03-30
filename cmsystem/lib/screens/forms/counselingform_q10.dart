@@ -1,3 +1,4 @@
+import 'package:cmsystem/screens/forms/counselingform_q11.dart';
 import 'package:flutter/material.dart';
 
 class CounselingFormQ10 extends StatelessWidget {
@@ -15,8 +16,10 @@ class CounselingFormQ10 extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: const Text('Preview & Submit',
-            style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text(
+          'Preview & Submit',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -33,7 +36,7 @@ class CounselingFormQ10 extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
-            // TODO: Replace the placeholders below with actual data variables from Q1-Q9
+            // Preview sections
             _buildPreviewSection(
                 'Q1: Mode of Counseling', 'Walk-in / Referral / Online'),
             _buildPreviewSection(
@@ -56,12 +59,10 @@ class CounselingFormQ10 extends StatelessWidget {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  // Handle form submission
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Form Submitted Successfully!'),
-                    ),
-                  );
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const CounselingFormQ11()));
                 },
                 style: ElevatedButton.styleFrom(
                   padding:
@@ -79,20 +80,6 @@ class CounselingFormQ10 extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: const Color(0xFF7B1F3A),
-        unselectedItemColor: Colors.pink[200],
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: "Notif"),
-          BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: ""),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_month), label: "Schedule"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: "Settings"),
-        ],
       ),
     );
   }
@@ -115,18 +102,22 @@ class CounselingFormQ10 extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-                color: Color(0xFF7B1F3A),
-              )),
+          Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              color: Color(0xFF7B1F3A),
+            ),
+          ),
           const SizedBox(height: 5),
-          Text(content,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.black87,
-              )),
+          Text(
+            content,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.black87,
+            ),
+          ),
         ],
       ),
     );

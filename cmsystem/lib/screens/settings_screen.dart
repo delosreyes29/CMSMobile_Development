@@ -19,7 +19,7 @@ class SettingsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // User Info Section (Matching Home Screen)
+              // User Info Section
               Row(
                 children: [
                   CircleAvatar(

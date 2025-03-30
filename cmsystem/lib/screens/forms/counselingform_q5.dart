@@ -224,20 +224,6 @@ class _CounselingFormQ5State extends State<CounselingFormQ5> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.pink.shade200,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: "Notif"),
-          BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: ""),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today), label: "Schedule"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: "Settings"),
-        ],
-      ),
     );
   }
 }

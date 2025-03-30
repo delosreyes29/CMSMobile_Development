@@ -48,7 +48,7 @@ class _CounselingFormQ9State extends State<CounselingFormQ9> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("IV. Family",
+            const Text("VI. Family",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -139,20 +139,6 @@ class _CounselingFormQ9State extends State<CounselingFormQ9> {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.pink.shade300,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: 'Notif'),
-          BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: ''),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_month), label: 'Schedule'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: 'Settings'),
-        ],
       ),
     );
   }

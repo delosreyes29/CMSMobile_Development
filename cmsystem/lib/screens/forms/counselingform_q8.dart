@@ -40,7 +40,7 @@ class _CounselingFormQ8State extends State<CounselingFormQ8> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("III. Academics",
+            const Text("V. Academics",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -134,21 +134,6 @@ class _CounselingFormQ8State extends State<CounselingFormQ8> {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        selectedItemColor: const Color(0xFF6B0D1D),
-        unselectedItemColor: Colors.pink.shade100,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: "Notif"),
-          BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: ""),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today), label: "Schedule"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: "Settings"),
-        ],
       ),
     );
   }

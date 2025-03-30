@@ -1,8 +1,3 @@
-import 'package:cmsystem/screens/forms/counselingform_consent.dart';
-import 'package:cmsystem/screens/home_screen.dart';
-import 'package:cmsystem/screens/notification/notification_screen_zero.dart';
-import 'package:cmsystem/screens/schedule_screen.dart';
-import 'package:cmsystem/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cmsystem/screens/forms/counselingform_q4.dart';
 
@@ -126,56 +121,6 @@ class _CounselingFormQ3State extends State<CounselingFormQ3> {
           ],
         ),
       ),
-      bottomNavigationBar: _buildBottomNavBar(),
-    );
-  }
-
-  Widget _buildBottomNavBar() {
-    return BottomNavigationBar(
-      selectedItemColor: Colors.pink.shade700,
-      unselectedItemColor: Colors.grey,
-      type: BottomNavigationBarType.fixed,
-      onTap: (index) {
-        switch (index) {
-          case 0:
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()));
-            break;
-          case 1:
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const NotificationScreenZero()));
-            break;
-          case 2:
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const CounselingFormConsent()));
-            break;
-          case 3:
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const ScheduleScreen()));
-            break;
-          case 4:
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const SettingsScreen()));
-            break;
-        }
-      },
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.notifications), label: 'Notif'),
-        BottomNavigationBarItem(icon: Icon(Icons.add_circle), label: ''),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today), label: 'Schedule'),
-        BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
-      ],
     );
   }
 }
