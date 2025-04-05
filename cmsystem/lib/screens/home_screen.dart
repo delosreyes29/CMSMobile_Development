@@ -112,10 +112,6 @@ class HomeScreen extends StatelessWidget {
 
             Container(
               width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.pink.shade50,
-              ),
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Image.asset('assets/home.png'),

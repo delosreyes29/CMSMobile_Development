@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cmsystem/screens/home_screen.dart';
-import 'package:cmsystem/screens/notification/notification_screen_Zero.dart';
+import 'package:cmsystem/screens/notification/notification_screen.dart';
 import 'package:cmsystem/screens/forms/counselingform_consent.dart';
 import 'package:cmsystem/screens/schedule_screen.dart';
 import 'package:cmsystem/screens/settings_screen.dart';
@@ -168,7 +168,7 @@ class HistoryScreen extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const NotificationScreenZero()));
+                    builder: (context) => const NotificationScreen()));
             break;
           case 2:
             Navigator.push(
