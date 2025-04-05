@@ -4,9 +4,30 @@ import 'package:cmsystem/screens/home_screen.dart';
 import 'package:cmsystem/screens/notification/notification_screen.dart';
 import 'package:cmsystem/screens/schedule_screen.dart';
 import 'package:cmsystem/screens/login.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({super.key, File? profileImage});
+
+  @override
+  _SettingsScreenState createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  File? _profileImage;
+
+  // Function to pick an image
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _profileImage = File(pickedFile.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +43,21 @@ class SettingsScreen extends StatelessWidget {
               // User Info Section
               Row(
                 children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.pink.shade100,
-                    radius: 25,
+                  GestureDetector(
+                    onTap: _pickImage, // Tap to pick image
+                    child: CircleAvatar(
+                      backgroundColor: Colors.pink.shade100,
+                      radius: 25,
+                      backgroundImage: _profileImage != null
+                          ? FileImage(_profileImage!)
+                          : null, // Display the picked image
+                      child: _profileImage == null
+                          ? const Icon(
+                              Icons.person,
+                              color: Colors.white,
+                            )
+                          : null, // Default icon if no image is picked
+                    ),
                   ),
                   const SizedBox(width: 12), // Adjusted spacing
                   const Column(
@@ -179,7 +212,9 @@ class SettingsScreen extends StatelessWidget {
       title: Text(title),
       trailing: const Icon(Icons.arrow_outward),
       onTap: () {
-        // Navigation logic if needed
+        if (title == "Change Display Icon") {
+          _pickImage(); // Trigger image picker when "Change Display Icon" is tapped
+        }
       },
     );
   }

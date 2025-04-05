@@ -11,7 +11,6 @@ class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(80.0),
         child: _buildAppBar(),
@@ -19,16 +18,6 @@ class HistoryScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // const Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: 20.0),
-          //   child: Text(
-          //     "Counseling Session History",
-          //     style: TextStyle(
-          //         fontSize: 22,
-          //         fontWeight: FontWeight.bold,
-          //         color: Colors.black),
-          //   ),
-          // ),
           const SizedBox(height: 10),
           _buildSemesterDropdown(),
           const SizedBox(height: 10),
@@ -100,7 +89,7 @@ class HistoryScreen extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color.fromARGB(250, 247, 242, 250),
         borderRadius: BorderRadius.circular(12),
         boxShadow: const [
           BoxShadow(

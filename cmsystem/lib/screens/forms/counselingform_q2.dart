@@ -1,6 +1,8 @@
-//data duplication question (yes, user's first time in requesting a session)
+// //DATA DUPLICATION QUESTION (YES, USER'S FIRST TIME IN REQUESTING A SESSION)
+
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmsystem/screens/forms/counselingform_q3.dart';
 
 class CounselingFormQ2 extends StatefulWidget {
@@ -13,18 +15,36 @@ class CounselingFormQ2 extends StatefulWidget {
 class _CounselingFormQ2State extends State<CounselingFormQ2> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  String? selectedTime;
+  TimeOfDay? selectedTime;
+
   List<String> fullyBookedTimes = [];
 
-  final List<DateTime> fullyBookedDates = [
-    DateTime(2024, 10, 5),
-    DateTime(2024, 10, 9),
-    DateTime(2024, 10, 11),
-    DateTime(2024, 10, 13),
-    DateTime(2024, 10, 17),
-    DateTime(2024, 10, 18),
-    DateTime(2024, 10, 25),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _selectedDay = _focusedDay;
+    _fetchFullyBookedTimes(_focusedDay);
+  }
+
+  void _fetchFullyBookedTimes(DateTime date) async {
+    String formattedDate =
+        "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
+    final snapshot = await FirebaseFirestore.instance
+        .collection('fully_booked')
+        .doc(formattedDate)
+        .get();
+
+    if (snapshot.exists && snapshot.data() != null) {
+      List<String> times = List<String>.from(snapshot.data()!['times'] ?? []);
+      setState(() {
+        fullyBookedTimes = times;
+      });
+    } else {
+      setState(() {
+        fullyBookedTimes = [];
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +83,10 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
                 ],
               ),
               const SizedBox(height: 20),
-              _buildTimeSelection(),
+              _buildTimeDropdown(),
+              const SizedBox(height: 20),
+              _buildFullyBookedTable(),
+              const SizedBox(height: 20),
               _buildTextField('Course & Year'),
               _buildTextField('College Department'),
               _buildTextField('Date of Birth'),
@@ -76,9 +99,10 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    if (_selectedDay == null) {
+                    if (_selectedDay == null || selectedTime == null) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Please select a date')),
+                        const SnackBar(
+                            content: Text('Please select date and time')),
                       );
                     } else {
                       Navigator.push(
@@ -132,6 +156,7 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
           _selectedDay = selectedDay;
           _focusedDay = focusedDay;
         });
+        _fetchFullyBookedTimes(selectedDay);
       },
       headerStyle: const HeaderStyle(
         formatButtonVisible: false,
@@ -156,8 +181,9 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
       ),
       calendarBuilders: CalendarBuilders(
         markerBuilder: (context, day, events) {
-          final isFullyBooked = fullyBookedDates.any((d) =>
-              d.year == day.year && d.month == day.month && d.day == day.day);
+          final isFullyBooked = fullyBookedTimes.isNotEmpty &&
+              _selectedDay != null &&
+              isSameDay(_selectedDay!, day);
           if (isFullyBooked) {
             return Positioned(
               bottom: 1,
@@ -177,47 +203,98 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
     );
   }
 
-  Widget _buildTimeSelection() {
+  Widget _buildTimeDropdown() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text('Time', style: TextStyle(fontWeight: FontWeight.bold)),
-        const SizedBox(height: 5),
-        Column(
-          children: [
-            _buildTimeCheckbox('9:00-10:00'),
-            _buildTimeCheckbox('10:00-11:00'),
-            _buildTimeCheckbox('11:00-12:00'),
-            _buildTimeCheckbox('12:00-13:00'),
-            _buildTimeCheckbox('13:00-14:00'),
-            _buildTimeCheckbox('14:00-15:00'),
-            _buildTimeCheckbox('15:00-16:00'),
-          ],
+        const SizedBox(height: 8),
+        GestureDetector(
+          onTap: () async {
+            final picked = await showTimePicker(
+              context: context,
+              initialTime: TimeOfDay.now(),
+            );
+            if (picked != null) {
+              setState(() {
+                selectedTime = picked;
+              });
+            }
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  selectedTime != null
+                      ? selectedTime!.format(context)
+                      : 'Select Time',
+                  style: const TextStyle(fontSize: 16),
+                ),
+                const Icon(Icons.access_time),
+              ],
+            ),
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildTimeCheckbox(String time) {
-    bool isBooked = fullyBookedTimes.contains(time);
-    return Row(
+  Widget _buildFullyBookedTable() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Checkbox(
-          value: selectedTime == time && !isBooked,
-          onChanged: isBooked
-              ? null
-              : (bool? value) {
-                  setState(() {
-                    selectedTime = value == true ? time : null;
-                  });
-                },
-        ),
-        Text(time),
-        if (isBooked)
-          const Text(
-            '  Fully Booked',
-            style: TextStyle(color: Colors.red),
+        // const Text(
+        //   'Fully Booked Time',
+        //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        // ),
+        const SizedBox(height: 10),
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.shade300),
+            borderRadius: BorderRadius.circular(8),
           ),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                color: Colors.pink.shade100,
+                child: Row(
+                  children: const [
+                    Expanded(
+                      child: Text(
+                        'Fully Booked Time Slots',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (fullyBookedTimes.isEmpty)
+                const Padding(
+                  padding: EdgeInsets.all(12.0),
+                  child: Text('No fully booked time'),
+                )
+              else
+                ...fullyBookedTimes.map((time) => Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 12.0),
+                      child: Row(
+                        children: [
+                          Expanded(child: Text(time)),
+                        ],
+                      ),
+                    )),
+            ],
+          ),
+        ),
       ],
     );
   }

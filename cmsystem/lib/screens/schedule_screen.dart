@@ -5,6 +5,7 @@ import 'package:cmsystem/screens/history_screen.dart';
 import 'package:cmsystem/screens/home_screen.dart';
 import 'package:cmsystem/screens/notification/notification_screen.dart';
 import 'package:cmsystem/screens/settings_screen.dart';
+import 'dart:io';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -17,6 +18,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   final int _selectedIndex = 3; // Schedule tab index
+  File? _profileImage; // To hold the profile image
 
   void _onItemTapped(int index) {
     switch (index) {
@@ -45,8 +47,19 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       case 4:
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const SettingsScreen()),
-        );
+          MaterialPageRoute(
+              builder: (context) => SettingsScreen(
+                    profileImage:
+                        _profileImage, // Pass current image to settings
+                  )),
+        ).then((updatedImage) {
+          // After returning from Settings, update the profile image if changed
+          if (updatedImage != null) {
+            setState(() {
+              _profileImage = updatedImage;
+            });
+          }
+        });
         break;
     }
   }
@@ -63,9 +76,36 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.pink.shade100,
-                    radius: 25,
+                  GestureDetector(
+                    onTap: () {
+                      // Navigate to SettingsScreen to change the profile image
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SettingsScreen(
+                                  profileImage: _profileImage,
+                                )),
+                      ).then((updatedImage) {
+                        if (updatedImage != null) {
+                          setState(() {
+                            _profileImage = updatedImage;
+                          });
+                        }
+                      });
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Colors.pink.shade100,
+                      radius: 25,
+                      backgroundImage: _profileImage != null
+                          ? FileImage(_profileImage!)
+                          : null, // Display the picked image
+                      child: _profileImage == null
+                          ? const Icon(
+                              Icons.person,
+                              color: Colors.white,
+                            )
+                          : null, // Default icon if no image is picked
+                    ),
                   ),
                   const SizedBox(width: 12), // Adjusted spacing
                   const Column(
@@ -148,7 +188,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
               // Counselor Info
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: const Color.fromARGB(250, 247, 242, 250),
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: const [
                     BoxShadow(
@@ -204,20 +244,17 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                           builder: (context) => const HistoryScreen()),
                     );
                   },
-                  style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Color(0xFFEC407A)),
+                  style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 14, horizontal: 40),
+                        horizontal: 80, vertical: 16),
+                    backgroundColor: Colors.pink.shade700,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                   child: const Text(
                     'View session history',
-                    style: TextStyle(
-                      color: Color(0xFFEC407A),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
               ),

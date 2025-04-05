@@ -1,11 +1,57 @@
+// lib/screens/home_screen.dart
+
 import 'package:cmsystem/screens/schedule_screen.dart';
 import 'package:cmsystem/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:cmsystem/screens/notification/notification_screen.dart';
+import 'package:cmsystem/screens/notification/notification_screen.dart'; // Updated import
 import 'package:cmsystem/screens/forms/counselingform_consent.dart';
+import 'package:cmsystem/screens/notification/notification_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  // Changed to StatefulWidget
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int notificationCount = 0;
+  String userName = "User";
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Get current user's name
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null && user.email != null) {
+      setState(() {
+        userName = user.email!.split('@').first;
+      });
+    }
+
+    // Start listening for notifications
+    NotificationService.startListening();
+
+    // Listen for notification count changes
+    NotificationService.notificationCountStream.listen((count) {
+      setState(() {
+        notificationCount = count;
+      });
+    });
+
+    // Load initial notification count
+    _loadNotificationCount();
+  }
+
+  Future<void> _loadNotificationCount() async {
+    final count = await NotificationService.getUnreadCount();
+    setState(() {
+      notificationCount = count;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +64,14 @@ class HomeScreen extends StatelessWidget {
         onTap: (index) {
           switch (index) {
             case 0:
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()),
-              );
+              // Already on home screen
               break;
             case 1:
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const NotificationScreen()),
+                    builder: (context) =>
+                        const NotificationScreen()), // Updated to use enhanced screen
               );
               break;
             case 2:
@@ -51,15 +95,45 @@ class HomeScreen extends StatelessWidget {
               break;
           }
         },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        items: [
+          const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: 'Notifications'),
-          BottomNavigationBarItem(
+            icon: Stack(
+              children: [
+                const Icon(Icons.notifications),
+                if (notificationCount > 0)
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      constraints: const BoxConstraints(
+                        minWidth: 14,
+                        minHeight: 14,
+                      ),
+                      child: Text(
+                        notificationCount > 9 ? '9+' : '$notificationCount',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 8,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            label: 'Notifications',
+          ),
+          const BottomNavigationBarItem(
               icon: Icon(Icons.add_circle, size: 40), label: ''),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today), label: 'Schedule'),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
               icon: Icon(Icons.settings), label: 'Settings'),
         ],
       ),
@@ -73,12 +147,20 @@ class HomeScreen extends StatelessWidget {
                 CircleAvatar(
                   backgroundColor: Colors.pink.shade100,
                   radius: 25,
+                  child: Text(
+                    userName.isNotEmpty ? userName[0].toUpperCase() : "U",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.pink.shade800,
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 12), // Adjusted spacing
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Welcome back !',
                       style: TextStyle(
                         fontSize: 16,
@@ -87,14 +169,15 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'User Name',
-                      style: TextStyle(
+                      userName,
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Colors.grey,
                       ),
                     ),
                   ],
-                )
+                ),
+                const Spacer(),
               ],
             ),
             const SizedBox(height: 30),
