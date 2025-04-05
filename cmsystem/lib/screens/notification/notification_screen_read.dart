@@ -5,6 +5,8 @@ import 'package:cmsystem/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 
 class NotificationScreen extends StatefulWidget {
+  const NotificationScreen({super.key});
+
   @override
   _NotificationScreenState createState() => _NotificationScreenState();
 }
@@ -51,7 +53,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   backgroundColor: Colors.grey[300],
                   child: Icon(Icons.person, color: Colors.grey[600]),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -68,7 +70,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Notifications Header with Filter Dropdown
             Row(
@@ -104,7 +106,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // Notifications List
             Expanded(
@@ -113,8 +115,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 itemBuilder: (context, index) {
                   final notif = filteredNotifications[index];
                   return Container(
-                    margin: EdgeInsets.symmetric(vertical: 5),
-                    padding: EdgeInsets.all(10),
+                    margin: const EdgeInsets.symmetric(vertical: 5),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: notif['status'] == 'Unread'
                           ? Colors.pink[50]
@@ -128,7 +130,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           backgroundColor: Colors.grey[300],
                           child: Icon(Icons.person, color: Colors.grey[600]),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,8 +151,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           ),
                         ),
                         notif['status'] == 'Unread'
-                            ? Icon(Icons.circle, size: 10, color: Colors.red)
-                            : SizedBox.shrink(),
+                            ? const Icon(Icons.circle,
+                                size: 10, color: Colors.red)
+                            : const SizedBox.shrink(),
                       ],
                     ),
                   );

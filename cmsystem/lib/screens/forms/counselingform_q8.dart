@@ -63,26 +63,26 @@ class _CounselingFormQ8State extends State<CounselingFormQ8> {
             CheckboxListTile(
               value: homesickness,
               onChanged: (val) => setState(() => homesickness = val!),
-              title: const Text("homesickness"),
+              title: const Text("Homesickness"),
               controlAffinity: ListTileControlAffinity.leading,
             ),
             CheckboxListTile(
               value: teacherIssue,
               onChanged: (val) => setState(() => teacherIssue = val!),
-              title: const Text("an issue with a teacher"),
+              title: const Text("An issue with a teacher"),
               controlAffinity: ListTileControlAffinity.leading,
             ),
             CheckboxListTile(
               value: notInterested,
               onChanged: (val) => setState(() => notInterested = val!),
-              title: const Text("not being prepared/interested in school"),
+              title: const Text("Not being prepared/interested in school"),
               controlAffinity: ListTileControlAffinity.leading,
             ),
             CheckboxListTile(
               value: notHappy,
               onChanged: (val) => setState(() => notHappy = val!),
               title: const Text(
-                  "not being happy/interested in the course/school I am currently enrolling in"),
+                  "Not being happy/interested in the course/school I am currently enrolling in"),
               controlAffinity: ListTileControlAffinity.leading,
             ),
             const SizedBox(height: 10),
