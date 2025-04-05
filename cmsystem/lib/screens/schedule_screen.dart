@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:cmsystem/screens/history_screen.dart';
 import 'package:cmsystem/screens/home_screen.dart';
-import 'package:cmsystem/screens/notification/notification_screen_zero.dart';
+import 'package:cmsystem/screens/notification/notification_screen.dart';
 import 'package:cmsystem/screens/settings_screen.dart';
 
 class ScheduleScreen extends StatefulWidget {
@@ -29,8 +29,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       case 1:
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-              builder: (context) => const NotificationScreenZero()),
+          MaterialPageRoute(builder: (context) => const NotificationScreen()),
         );
         break;
       case 2:

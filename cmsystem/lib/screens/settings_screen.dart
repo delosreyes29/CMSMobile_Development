@@ -1,7 +1,7 @@
 import 'package:cmsystem/screens/forms/counselingform_consent.dart';
 import 'package:flutter/material.dart';
 import 'package:cmsystem/screens/home_screen.dart';
-import 'package:cmsystem/screens/notification/notification_screen_zero.dart';
+import 'package:cmsystem/screens/notification/notification_screen.dart';
 import 'package:cmsystem/screens/schedule_screen.dart';
 import 'package:cmsystem/screens/login.dart';
 
@@ -128,7 +128,7 @@ class SettingsScreen extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const NotificationScreenZero()),
+                    builder: (context) => const NotificationScreen()),
               );
               break;
             case 2:
