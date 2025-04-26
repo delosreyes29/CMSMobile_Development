@@ -265,8 +265,8 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
               Container(
                 padding: const EdgeInsets.all(8),
                 color: Colors.pink.shade100,
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Expanded(
                       child: Text(
                         'Fully Booked Time Slots',

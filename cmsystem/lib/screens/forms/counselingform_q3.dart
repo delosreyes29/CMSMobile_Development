@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:cmsystem/screens/forms/counselingform_q4.dart';
-import 'package:cmsystem/screens/forms/counselingform_q12.dart';
+import 'package:cmsystem/screens/forms/counselingform_q10.dart';
 
 class CounselingFormQ3 extends StatefulWidget {
   const CounselingFormQ3({super.key});
@@ -17,7 +17,7 @@ class _CounselingFormQ3State extends State<CounselingFormQ3> {
   void _navigateToNext() {
     if (selectedMode.isNotEmpty) {
       Widget nextScreen = selectedMode == 'Referral'
-          ? CounselingFormQ12()
+          ? const CounselingFormQ10()
           : const CounselingFormQ4();
 
       Navigator.push(

@@ -17,7 +17,7 @@ class NotificationService {
   static GlobalKey<NavigatorState>? _navigatorKey;
 
   // In-memory storage for notifications when SharedPreferences fails
-  static List<Map<String, dynamic>> _inMemoryNotifications = [];
+  static final List<Map<String, dynamic>> _inMemoryNotifications = [];
   static int _unreadCount = 0;
 
   // Stream controller for notification count
@@ -236,7 +236,7 @@ class NotificationService {
         id,
         title,
         body,
-        NotificationDetails(
+        const NotificationDetails(
           android: AndroidNotificationDetails(
             'counseling_channel',
             'Counseling Notifications',
@@ -245,7 +245,7 @@ class NotificationService {
             priority: Priority.high,
             icon: '@mipmap/ic_launcher',
           ),
-          iOS: const DarwinNotificationDetails(),
+          iOS: DarwinNotificationDetails(),
         ),
         payload: jsonEncode(data),
       );
@@ -552,20 +552,20 @@ class NotificationService {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Faculty Referral'),
+            title: const Text('Faculty Referral'),
             content: Text(
                 'You have been referred for counseling by ${data['facultyName']}. Reason: ${data['reason']}'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('Close'),
+                child: const Text('Close'),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                   Navigator.pushNamed(context, '/schedule/new');
                 },
-                child: Text('Schedule Session'),
+                child: const Text('Schedule Session'),
               ),
             ],
           ),
@@ -579,18 +579,18 @@ class NotificationService {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Urgent: Counseling Required'),
+            title: const Text('Urgent: Counseling Required'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('You have been flagged for priority counseling.'),
-                SizedBox(height: 8),
+                const Text('You have been flagged for priority counseling.'),
+                const SizedBox(height: 8),
                 Text('Reason: ${data['reason'] ?? 'Not specified'}'),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text('Contact: ${data['contactPerson'] ?? 'Guidance Office'}'),
                 if (data['contactNumber'] != null) ...[
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text('Phone: ${data['contactNumber']}'),
                 ],
               ],
@@ -598,14 +598,14 @@ class NotificationService {
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('Close'),
+                child: const Text('Close'),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                   Navigator.pushNamed(context, '/schedule/new');
                 },
-                child: Text('Schedule Session'),
+                child: const Text('Schedule Session'),
               ),
             ],
           ),

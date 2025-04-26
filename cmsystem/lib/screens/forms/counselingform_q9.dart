@@ -1,146 +1,152 @@
-//VI. Family
+//Request submitted page
 
 import 'package:flutter/material.dart';
-import 'package:cmsystem/screens/forms/counselingform_q10.dart';
+import 'package:cmsystem/screens/home_screen.dart';
+import 'package:cmsystem/screens/notification/notification_screen.dart';
+import 'package:cmsystem/screens/schedule_screen.dart';
+import 'package:cmsystem/screens/settings_screen.dart';
+import 'package:cmsystem/screens/forms/counselingform_consent.dart';
 
-class CounselingFormQ9 extends StatefulWidget {
+class CounselingFormQ9 extends StatelessWidget {
   const CounselingFormQ9({super.key});
 
-  @override
-  State<CounselingFormQ9> createState() => _CounselingFormQ9State();
-}
-
-class _CounselingFormQ9State extends State<CounselingFormQ9> {
-  Map<String, bool> concerns = {
-    'I cannot accept that my parents are separated.': false,
-    'I have a hard time dealing with my parents/guardian’s expectations and demands.':
-        false,
-    'I have experienced frequent argument/s with family member/s or relatives.':
-        false,
-    'Our family is having financial concerns.': false,
-    'I have a hard time telling my family about my gender preference (e.g., Gay/Lesbian/LGBTQ).':
-        false,
-    'I am worried/troubled by a family member’s illness.': false,
-  };
-
-  Map<String, bool> violence = {
-    'Physical': false,
-    'Emotional': false,
-    'Psychological': false,
-    'Verbal': false,
-  };
-
-  TextEditingController openUpController = TextEditingController();
+  void _navigateToScreen(BuildContext context, int index) {
+    switch (index) {
+      case 0:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
+        );
+        break;
+      case 1:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const NotificationScreen()),
+        );
+        break;
+      case 2:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const CounselingFormConsent()),
+        );
+        break;
+      case 3:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const ScheduleScreen()),
+        );
+        break;
+      case 4:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const SettingsScreen()),
+        );
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Student Initial/Routine Interview',
-            style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.pink.shade100,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
+      body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("VI. Family",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF6B0D1D))),
-            const SizedBox(height: 10),
-            const Text(
-              'Instruction: Check only the box of the statement/s you consider your concern for the past four (4) weeks.',
-              style: TextStyle(fontSize: 14),
-            ),
-            const SizedBox(height: 20),
-
-            // checkboxes
-            ...concerns.entries.map((entry) {
-              return CheckboxListTile(
-                title: Text(entry.key),
-                value: entry.value,
-                onChanged: (val) {
-                  setState(() {
-                    concerns[entry.key] = val!;
-                  });
-                },
-              );
-            }),
-
-            const SizedBox(height: 10),
-            const Text("I have difficulty opening up to family member/s."),
-            const SizedBox(height: 5),
-            TextField(
-              controller: openUpController,
-              decoration: const InputDecoration(
-                hintText: '(Please specify)',
-                border: OutlineInputBorder(),
-              ),
-            ),
-
-            const SizedBox(height: 20),
-            const Text(
-              'I have experienced frequent violence with family member/s',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 5),
-
-            Wrap(
-              spacing: 10,
-              children: violence.entries.map((entry) {
-                return Row(
-                  mainAxisSize: MainAxisSize.min,
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.pink.shade100,
+                  radius: 25,
+                ),
+                const SizedBox(width: 12),
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Checkbox(
-                      value: entry.value,
-                      onChanged: (val) {
-                        setState(() {
-                          violence[entry.key] = val!;
-                        });
-                      },
+                    Text(
+                      'Welcome back!',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
-                    Text(entry.key),
+                    SizedBox(height: 2), // Ensures consistency in spacing
+                    Text(
+                      'User Name',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
+                    ),
                   ],
-                );
-              }).toList(),
+                )
+              ],
             ),
-
             const SizedBox(height: 40),
 
-            // next button
-            Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 80, vertical: 16),
-                  backgroundColor: Colors.pink.shade700,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const CounselingFormQ10()),
-                  );
-                },
-                child: const Text(
-                  'Next',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+            // Request Submitted Message
+            Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 30),
+                    Image.asset('assets/survey.png', height: 150),
+                    const Text(
+                      'Request submitted!',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      'Your session request is pending confirmation.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 16, color: Colors.black54),
+                    ),
+                  ],
                 ),
               ),
             ),
           ],
         ),
+      ),
+
+      // Bottom Navigation Bar
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 2,
+        type: BottomNavigationBarType.fixed,
+        unselectedItemColor: Colors.grey,
+        showUnselectedLabels: true,
+        onTap: (index) {
+          _navigateToScreen(context, index);
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: "Notifications",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_circle, size: 40, color: Colors.pink),
+            label: "",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today),
+            label: "Schedule",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: "Settings",
+          ),
+        ],
       ),
     );
   }

@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({Key? key}) : super(key: key);
+  const NotificationScreen({super.key});
 
   @override
   _NotificationScreenState createState() => _NotificationScreenState();
@@ -128,11 +128,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           ? Icon(Icons.person, color: Colors.grey[600])
                           : null, // Fallback icon if no image available
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Welcome back !",
                           style: TextStyle(
                               fontSize: 16,
@@ -189,7 +189,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Debug controls - only show in debug mode
             if (isDebugMode) ...[
@@ -205,11 +205,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.pink,
                       foregroundColor: Colors.white,
-                      textStyle: TextStyle(fontSize: 12),
+                      textStyle: const TextStyle(fontSize: 12),
                     ),
-                    child: Text('Send Test'),
+                    child: const Text('Send Test'),
                   ),
-                  SizedBox(width: 5),
+                  const SizedBox(width: 5),
                   ElevatedButton(
                     onPressed: () {
                       _log("Sending direct local notification");
@@ -246,11 +246,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.orange,
                       foregroundColor: Colors.white,
-                      textStyle: TextStyle(fontSize: 12),
+                      textStyle: const TextStyle(fontSize: 12),
                     ),
-                    child: Text('Direct Test'),
+                    child: const Text('Direct Test'),
                   ),
-                  SizedBox(width: 5),
+                  const SizedBox(width: 5),
                   ElevatedButton(
                     onPressed: () {
                       _log("Debugging Firestore connection");
@@ -260,24 +260,24 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
                       foregroundColor: Colors.white,
-                      textStyle: TextStyle(fontSize: 12),
+                      textStyle: const TextStyle(fontSize: 12),
                     ),
-                    child: Text('Debug'),
+                    child: const Text('Debug'),
                   ),
                 ],
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Text(
                 "User ID: ${FirebaseAuth.instance.currentUser?.uid ?? 'Not logged in'}",
-                style: TextStyle(fontSize: 10, color: Colors.grey),
+                style: const TextStyle(fontSize: 10, color: Colors.grey),
                 overflow: TextOverflow.ellipsis,
               ),
 
               // Debug logs display
               Container(
                 height: 60,
-                padding: EdgeInsets.all(4),
-                margin: EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.all(4),
+                margin: const EdgeInsets.symmetric(vertical: 8),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey.shade300),
                   borderRadius: BorderRadius.circular(8),
@@ -286,7 +286,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 child: SingleChildScrollView(
                   child: Text(
                     _debugLogs,
-                    style: TextStyle(fontSize: 10, fontFamily: 'monospace'),
+                    style:
+                        const TextStyle(fontSize: 10, fontFamily: 'monospace'),
                   ),
                 ),
               ),
@@ -296,7 +297,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   "Notifications",
                   style: TextStyle(
                       fontSize: 22,
@@ -326,12 +327,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // Notifications List or Empty State
             Expanded(
               child: isLoading
-                  ? Center(child: CircularProgressIndicator())
+                  ? const Center(child: CircularProgressIndicator())
                   : filteredNotifications.isEmpty
                       ? _buildEmptyState()
                       : _buildNotificationsList(filteredNotifications),
@@ -455,8 +456,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
             }
           },
           child: Container(
-            margin: EdgeInsets.symmetric(vertical: 5),
-            padding: EdgeInsets.all(10),
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: notif['status'] == 'Unread'
                   ? Colors.pink[50]
@@ -470,7 +471,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   backgroundColor: Colors.grey[300],
                   child: Icon(Icons.person, color: Colors.grey[600]),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -493,7 +494,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       Text(
                         notif['message'] ?? '',
                         style: TextStyle(color: Colors.grey[600]),
@@ -504,7 +505,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   ),
                 ),
                 notif['status'] == 'Unread'
-                    ? CircleAvatar(
+                    ? const CircleAvatar(
                         radius: 10,
                         backgroundColor: Colors.red,
                         child: Icon(
@@ -513,7 +514,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           color: Colors.white,
                         ),
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
               ],
             ),
           ),
