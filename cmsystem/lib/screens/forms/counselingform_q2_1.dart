@@ -161,11 +161,11 @@ class _CounselingFormQ2_1State extends State<CounselingFormQ2_1> {
             );
             if (picked != null) {
               final hour = picked.hour;
-              if (hour >= 20 || hour < 6) {
+              if (hour >= 17 || hour < 7) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text(
-                      "Please select a time between 6:00 AM and 8:00 PM.",
+                      "Please select a time between 7:00 AM and 5:00 PM.",
                     ),
                     backgroundColor: Colors.red,
                   ),
