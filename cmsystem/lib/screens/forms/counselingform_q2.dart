@@ -16,6 +16,7 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
   TimeOfDay? selectedTime;
 
   List<String> fullyBookedTimes = [];
+
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController uicIdController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -63,6 +64,7 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
         emailController.text.isNotEmpty &&
         _selectedDay != null &&
         selectedTime != null &&
+        !_isTimeFullyBooked() &&
         courseYearController.text.isNotEmpty &&
         departmentController.text.isNotEmpty &&
         dobController.text.isNotEmpty &&
@@ -71,6 +73,12 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
         addressController.text.isNotEmpty &&
         emergencyContactController.text.isNotEmpty &&
         emergencyContactNoController.text.isNotEmpty;
+  }
+
+  bool _isTimeFullyBooked() {
+    if (selectedTime == null) return false;
+    final selected = selectedTime!.format(context);
+    return fullyBookedTimes.contains(selected);
   }
 
   @override
@@ -162,6 +170,7 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextField(
         controller: controller,
+        onChanged: (_) => setState(() {}),
         decoration: InputDecoration(
           labelText: label,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
@@ -172,7 +181,7 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
 
   Widget _buildCalendar() {
     return TableCalendar(
-      firstDay: DateTime.now(), // ⛔ prevents past date selection
+      firstDay: DateTime.now(),
       lastDay: DateTime.utc(2030, 12, 31),
       focusedDay: _focusedDay,
       selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
@@ -204,27 +213,6 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
           shape: BoxShape.circle,
         ),
       ),
-      calendarBuilders: CalendarBuilders(
-        markerBuilder: (context, day, events) {
-          final isFullyBooked = fullyBookedTimes.isNotEmpty &&
-              _selectedDay != null &&
-              isSameDay(_selectedDay!, day);
-          if (isFullyBooked) {
-            return Positioned(
-              bottom: 1,
-              child: Container(
-                width: 5,
-                height: 5,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.brown,
-                ),
-              ),
-            );
-          }
-          return null;
-        },
-      ),
     );
   }
 
@@ -243,12 +231,19 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
 
             if (picked != null) {
               final int hour = picked.hour;
-              // ⛔ Block time before 6am or after 8pm
+              final selectedFormatted = picked.format(context);
+
               if (hour < 7 || hour >= 17) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text(
                         'Please choose a time between 7:00 AM and 5:00 PM'),
+                  ),
+                );
+              } else if (fullyBookedTimes.contains(selectedFormatted)) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Selected time is already fully booked'),
                   ),
                 );
               } else {
