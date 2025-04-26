@@ -159,19 +159,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 15),
 
-                // College (Changed from Course)
-                TextFormField(
-                  controller: _collegeController,
+                // College Dropdown
+                DropdownButtonFormField<String>(
+                  value: _collegeController.text.isNotEmpty
+                      ? _collegeController.text
+                      : null,
                   decoration: const InputDecoration(
                     labelText: "College",
                     border: OutlineInputBorder(),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter your college";
-                    }
-                    return null;
+                  items: [
+                    'College of Accounting and Business Education',
+                    'College of Arts and Humanities',
+                    'College of Computer Studies',
+                    'College of Engineering and Architecture',
+                    'College of Human Environmental Sciences and Food Studies',
+                    'College of Music',
+                    'College of Medical and Biological Science',
+                    'College of Nursing',
+                    'College of Pharmacy and Chemistry',
+                    'College of Teacher Education',
+                  ]
+                      .map((college) => DropdownMenuItem(
+                            value: college,
+                            child: Text(college),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _collegeController.text = value!;
+                    });
                   },
+                  validator: (value) => value == null || value.isEmpty
+                      ? 'Please select your college'
+                      : null,
                 ),
                 const SizedBox(height: 15),
 

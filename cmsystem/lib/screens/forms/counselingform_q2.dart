@@ -1,5 +1,3 @@
-// //DATA DUPLICATION QUESTION (YES, USER'S FIRST TIME IN REQUESTING A SESSION)
-
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,6 +16,19 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
   TimeOfDay? selectedTime;
 
   List<String> fullyBookedTimes = [];
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController uicIdController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController courseYearController = TextEditingController();
+  final TextEditingController departmentController = TextEditingController();
+  final TextEditingController dobController = TextEditingController();
+  final TextEditingController ageSexController = TextEditingController();
+  final TextEditingController contactController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController emergencyContactController =
+      TextEditingController();
+  final TextEditingController emergencyContactNoController =
+      TextEditingController();
 
   @override
   void initState() {
@@ -46,6 +57,22 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
     }
   }
 
+  bool _isFormValid() {
+    return fullNameController.text.isNotEmpty &&
+        uicIdController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        _selectedDay != null &&
+        selectedTime != null &&
+        courseYearController.text.isNotEmpty &&
+        departmentController.text.isNotEmpty &&
+        dobController.text.isNotEmpty &&
+        ageSexController.text.isNotEmpty &&
+        contactController.text.isNotEmpty &&
+        addressController.text.isNotEmpty &&
+        emergencyContactController.text.isNotEmpty &&
+        emergencyContactNoController.text.isNotEmpty;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,9 +94,9 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
-              _buildTextField('Full Name'),
-              _buildTextField('UIC ID No.'),
-              _buildTextField('UIC Email Address'),
+              _buildTextField('Full Name', fullNameController),
+              _buildTextField('UIC ID No.', uicIdController),
+              _buildTextField('UIC Email Address', emailController),
               const SizedBox(height: 20),
               const Text('Date', style: TextStyle(fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
@@ -87,31 +114,28 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
               const SizedBox(height: 20),
               _buildFullyBookedTable(),
               const SizedBox(height: 20),
-              _buildTextField('Course & Year'),
-              _buildTextField('College Department'),
-              _buildTextField('Date of Birth'),
-              _buildTextField('Age / Sex'),
-              _buildTextField('Contact No.'),
-              _buildTextField('Present Address'),
-              _buildTextField('Emergency contact person'),
-              _buildTextField('Emergency contact person’s contact no.'),
+              _buildTextField('Course & Year', courseYearController),
+              _buildTextField('College Department', departmentController),
+              _buildTextField('Date of Birth', dobController),
+              _buildTextField('Age / Sex', ageSexController),
+              _buildTextField('Contact No.', contactController),
+              _buildTextField('Present Address', addressController),
+              _buildTextField(
+                  'Emergency contact person', emergencyContactController),
+              _buildTextField('Emergency contact person’s contact no.',
+                  emergencyContactNoController),
               const SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
-                  onPressed: () {
-                    if (_selectedDay == null || selectedTime == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text('Please select date and time')),
-                      );
-                    } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const CounselingFormQ3()),
-                      );
-                    }
-                  },
+                  onPressed: _isFormValid()
+                      ? () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const CounselingFormQ3()),
+                          );
+                        }
+                      : null,
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 80, vertical: 16),
@@ -133,10 +157,11 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
     );
   }
 
-  Widget _buildTextField(String label) {
+  Widget _buildTextField(String label, TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextField(
+        controller: controller,
         decoration: InputDecoration(
           labelText: label,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
@@ -147,7 +172,7 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
 
   Widget _buildCalendar() {
     return TableCalendar(
-      firstDay: DateTime.utc(2020, 1, 1),
+      firstDay: DateTime.now(), // ⛔ prevents past date selection
       lastDay: DateTime.utc(2030, 12, 31),
       focusedDay: _focusedDay,
       selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
@@ -215,10 +240,22 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
               context: context,
               initialTime: TimeOfDay.now(),
             );
+
             if (picked != null) {
-              setState(() {
-                selectedTime = picked;
-              });
+              final int hour = picked.hour;
+              // ⛔ Block time before 6am or after 8pm
+              if (hour < 7 || hour >= 17) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                        'Please choose a time between 7:00 AM and 5:00 PM'),
+                  ),
+                );
+              } else {
+                setState(() {
+                  selectedTime = picked;
+                });
+              }
             }
           },
           child: Container(
@@ -249,10 +286,6 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // const Text(
-        //   'Fully Booked Time',
-        //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        // ),
         const SizedBox(height: 10),
         Container(
           width: double.infinity,

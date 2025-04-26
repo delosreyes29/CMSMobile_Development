@@ -1,5 +1,3 @@
-// //DATA DUPLICATION QUESTION (NO, USER HAS REQUESTED A SESSION BEFORE)
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -16,8 +14,10 @@ class _CounselingFormQ2_1State extends State<CounselingFormQ2_1> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   TimeOfDay? selectedTime;
-
   List<String> fullyBookedTimes = [];
+  TextEditingController nameController = TextEditingController();
+  TextEditingController idController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 
   @override
   void initState() {
@@ -54,11 +54,14 @@ class _CounselingFormQ2_1State extends State<CounselingFormQ2_1> {
   }
 
   void _onNextPressed() {
-    if (_selectedDay == null || selectedTime == null) {
+    if (nameController.text.isEmpty ||
+        idController.text.isEmpty ||
+        emailController.text.isEmpty ||
+        _selectedDay == null ||
+        selectedTime == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content:
-              Text("Please select both a date and time before proceeding."),
+          content: Text("Please fill in all fields before proceeding."),
           backgroundColor: Colors.red,
         ),
       );
@@ -71,75 +74,11 @@ class _CounselingFormQ2_1State extends State<CounselingFormQ2_1> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.pink.shade100,
-        title: const Text(
-          'Student Initial/Routine Interview',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Request a counseling session',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              _buildTextField('Full Name'),
-              _buildTextField('UIC ID No.'),
-              _buildTextField('UIC Email Address'),
-              const SizedBox(height: 20),
-              const Text('Date', style: TextStyle(fontWeight: FontWeight.bold)),
-              const SizedBox(height: 10),
-              _buildCalendar(),
-              const SizedBox(height: 10),
-              // const Row(
-              //   children: [
-              //     Icon(Icons.circle, size: 8, color: Colors.brown),
-              //     SizedBox(width: 6),
-              //     Text("Fully Booked Dates", style: TextStyle(fontSize: 12)),
-              //   ],
-              // ),
-              const SizedBox(height: 20),
-              _buildTimeDropdown(),
-              const SizedBox(height: 20),
-              _buildFullyBookedTable(),
-              const SizedBox(height: 30),
-              Center(
-                child: ElevatedButton(
-                  onPressed: _onNextPressed,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 80, vertical: 16),
-                    backgroundColor: Colors.pink.shade700,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  child: const Text(
-                    'Next',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTextField(String label) {
+  Widget _buildTextField(String label, TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextField(
+        controller: controller,
         decoration: InputDecoration(
           labelText: label,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
@@ -150,16 +89,18 @@ class _CounselingFormQ2_1State extends State<CounselingFormQ2_1> {
 
   Widget _buildCalendar() {
     return TableCalendar(
-      firstDay: DateTime.utc(2020, 1, 1),
+      firstDay: DateTime.now(),
       lastDay: DateTime.utc(2030, 12, 31),
       focusedDay: _focusedDay,
       selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
       onDaySelected: (selectedDay, focusedDay) {
-        setState(() {
-          _selectedDay = selectedDay;
-          _focusedDay = focusedDay;
-        });
-        _fetchFullyBookedTimes(selectedDay);
+        if (!selectedDay.isBefore(DateTime.now())) {
+          setState(() {
+            _selectedDay = selectedDay;
+            _focusedDay = focusedDay;
+          });
+          _fetchFullyBookedTimes(selectedDay);
+        }
       },
       headerStyle: const HeaderStyle(
         formatButtonVisible: false,
@@ -219,9 +160,21 @@ class _CounselingFormQ2_1State extends State<CounselingFormQ2_1> {
               initialTime: TimeOfDay.now(),
             );
             if (picked != null) {
-              setState(() {
-                selectedTime = picked;
-              });
+              final hour = picked.hour;
+              if (hour >= 20 || hour < 6) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      "Please select a time between 6:00 AM and 8:00 PM.",
+                    ),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              } else {
+                setState(() {
+                  selectedTime = picked;
+                });
+              }
             }
           },
           child: Container(
@@ -299,6 +252,63 @@ class _CounselingFormQ2_1State extends State<CounselingFormQ2_1> {
           ),
         ),
       ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.pink.shade100,
+        title: const Text(
+          'Student Initial/Routine Interview',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Request a counseling session',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              _buildTextField('Full Name', nameController),
+              _buildTextField('UIC ID No.', idController),
+              _buildTextField('UIC Email Address', emailController),
+              const SizedBox(height: 20),
+              const Text('Date', style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+              _buildCalendar(),
+              const SizedBox(height: 20),
+              _buildTimeDropdown(),
+              const SizedBox(height: 20),
+              _buildFullyBookedTable(),
+              const SizedBox(height: 30),
+              Center(
+                child: ElevatedButton(
+                  onPressed: _onNextPressed,
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 80, vertical: 16),
+                    backgroundColor: Colors.pink.shade700,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  child: const Text(
+                    'Next',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

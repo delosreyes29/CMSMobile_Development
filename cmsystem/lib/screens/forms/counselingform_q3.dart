@@ -99,8 +99,8 @@ class _CounselingFormQ3State extends State<CounselingFormQ3> {
             // Mode Options
             _buildModeButton('Walk-in',
                 'Students take the initiative to go to the counseling office directly.'),
-            _buildModeButton('Referral',
-                'Faculty members refer students who they believe need counseling by completing and sending a referral form to the counseling office.'),
+            // _buildModeButton('Referral',
+            //     'Faculty members refer students who they believe need counseling by completing and sending a referral form to the counseling office.'),
             _buildModeButton('Online',
                 'A student chooses to have a counseling session conducted online rather than in person.'),
 
