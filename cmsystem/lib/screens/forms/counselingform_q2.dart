@@ -1,7 +1,9 @@
+//yes
+
+import 'package:cmsystem/screens/forms/counselingform_q3.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cmsystem/screens/forms/counselingform_q3.dart';
 
 class CounselingFormQ2 extends StatefulWidget {
   const CounselingFormQ2({super.key});
@@ -20,16 +22,32 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController uicIdController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController courseYearController = TextEditingController();
-  final TextEditingController departmentController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
-  final TextEditingController ageSexController = TextEditingController();
   final TextEditingController contactController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController emergencyContactController =
       TextEditingController();
   final TextEditingController emergencyContactNoController =
       TextEditingController();
+
+  String? selectedCollege;
+  String? selectedSex;
+
+  final List<String> collegeOptions = [
+    'College of Accounting and Business Education',
+    'College of Arts and Humanities',
+    'College of Computer Studies',
+    'College of Engineering and Architecture',
+    'College of Human Environmental Sciences and Food Studies',
+    'College of Music',
+    'College of Medical and Biological Science',
+    'College of Nursing',
+    'College of Pharmacy and Chemistry',
+    'College of Teacher Education',
+  ];
+
+  final List<String> sexOptions = ['Male', 'Female', 'Other'];
 
   @override
   void initState() {
@@ -62,13 +80,13 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
     return fullNameController.text.isNotEmpty &&
         uicIdController.text.isNotEmpty &&
         emailController.text.isNotEmpty &&
+        ageController.text.isNotEmpty &&
+        selectedSex != null &&
+        selectedCollege != null &&
         _selectedDay != null &&
         selectedTime != null &&
         !_isTimeFullyBooked() &&
-        courseYearController.text.isNotEmpty &&
-        departmentController.text.isNotEmpty &&
         dobController.text.isNotEmpty &&
-        ageSexController.text.isNotEmpty &&
         contactController.text.isNotEmpty &&
         addressController.text.isNotEmpty &&
         emergencyContactController.text.isNotEmpty &&
@@ -105,6 +123,26 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
               _buildTextField('Full Name', fullNameController),
               _buildTextField('UIC ID No.', uicIdController),
               _buildTextField('UIC Email Address', emailController),
+              _buildTextField('Age', ageController),
+              _buildDropdown('Sex', sexOptions, selectedSex, (value) {
+                setState(() {
+                  selectedSex = value;
+                });
+              }),
+              _buildDropdown(
+                  'College Department', collegeOptions, selectedCollege,
+                  (value) {
+                setState(() {
+                  selectedCollege = value;
+                });
+              }),
+              _buildDateOfBirthField('Date of Birth', dobController),
+              _buildTextField('Contact No.', contactController),
+              _buildTextField('Present Address', addressController),
+              _buildTextField(
+                  'Emergency contact person', emergencyContactController),
+              _buildTextField('Emergency contact person’s contact no.',
+                  emergencyContactNoController),
               const SizedBox(height: 20),
               const Text('Date', style: TextStyle(fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
@@ -122,26 +160,59 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
               const SizedBox(height: 20),
               _buildFullyBookedTable(),
               const SizedBox(height: 20),
-              _buildTextField('Course & Year', courseYearController),
-              _buildTextField('College Department', departmentController),
-              _buildTextField('Date of Birth', dobController),
-              _buildTextField('Age / Sex', ageSexController),
-              _buildTextField('Contact No.', contactController),
-              _buildTextField('Present Address', addressController),
-              _buildTextField(
-                  'Emergency contact person', emergencyContactController),
-              _buildTextField('Emergency contact person’s contact no.',
-                  emergencyContactNoController),
-              const SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
                   onPressed: _isFormValid()
-                      ? () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const CounselingFormQ3()),
-                          );
+                      ? () async {
+                          try {
+                            // Prepare data to store in Firestore
+                            final formData = {
+                              'fullName': fullNameController.text,
+                              'uicId': uicIdController.text,
+                              'email': emailController.text,
+                              'age': ageController.text,
+                              'sex': selectedSex,
+                              'college': selectedCollege,
+                              'selectedDate': _selectedDay != null
+                                  ? "${_selectedDay!.year}-${_selectedDay!.month.toString().padLeft(2, '0')}-${_selectedDay!.day.toString().padLeft(2, '0')}"
+                                  : null,
+                              'selectedTime': selectedTime?.format(context),
+                              'dob': dobController.text,
+                              'contact': contactController.text,
+                              'address': addressController.text,
+                              'emergencyContact':
+                                  emergencyContactController.text,
+                              'emergencyContactNo':
+                                  emergencyContactNoController.text,
+                            };
+
+                            // Store data in Firestore and get the document ID
+                            final docRef = await FirebaseFirestore.instance
+                                .collection('counselingForms')
+                                .add(formData);
+
+                            final documentId = docRef.id; // Get the document ID
+
+                            // Navigate to CounselingFormQ3 and pass the document ID
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    CounselingFormQ3(documentId: documentId),
+                              ),
+                            );
+
+                            // Show success message
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Form updated successfully!')),
+                            );
+                          } catch (e) {
+                            // Handle Firestore errors
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Error: $e')),
+                            );
+                          }
                         }
                       : null,
                   style: ElevatedButton.styleFrom(
@@ -175,6 +246,27 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
           labelText: label,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
         ),
+      ),
+    );
+  }
+
+  Widget _buildDropdown(String label, List<String> options, String? value,
+      void Function(String?) onChanged) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+        ),
+        value: value,
+        items: options.map((option) {
+          return DropdownMenuItem<String>(
+            value: option,
+            child: Text(option),
+          );
+        }).toList(),
+        onChanged: onChanged,
       ),
     );
   }
@@ -324,6 +416,40 @@ class _CounselingFormQ2State extends State<CounselingFormQ2> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildDateOfBirthField(
+      String label, TextEditingController controller) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: GestureDetector(
+        onTap: () async {
+          DateTime? pickedDate = await showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1900), // Earliest selectable date
+            lastDate: DateTime.now(), // Latest selectable date
+          );
+
+          if (pickedDate != null) {
+            setState(() {
+              controller.text =
+                  "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
+            });
+          }
+        },
+        child: AbsorbPointer(
+          child: TextField(
+            controller: controller,
+            decoration: InputDecoration(
+              labelText: label,
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cmsystem/screens/forms/counselingform_q2.dart';
 import 'package:cmsystem/screens/forms/counselingform_q2_1.dart';
-import 'package:cmsystem/screens/forms/counselingform_q10.dart'; // import this
+import 'package:cmsystem/screens/forms/counselingform_q10.dart';
 
 class CounselingFormQ1 extends StatefulWidget {
   const CounselingFormQ1({super.key});
@@ -32,10 +32,10 @@ class _CounselingFormQ1State extends State<CounselingFormQ1> {
         );
       }
     } else {
-      // Optional: Show alert if no role selected
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            content: Text('Please select Student or Faculty member')),
+          content: Text('Please select Student or Faculty member'),
+        ),
       );
     }
   }
@@ -59,7 +59,7 @@ class _CounselingFormQ1State extends State<CounselingFormQ1> {
         ),
         elevation: 0,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,12 +73,17 @@ class _CounselingFormQ1State extends State<CounselingFormQ1> {
               children: [
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
+                  child: ElevatedButton.icon(
                     onPressed: () {
                       setState(() {
                         selectedRole = 'Student';
                       });
                     },
+                    icon: const Icon(Icons.school, color: Colors.white),
+                    label: const Text(
+                      "Student",
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 80, vertical: 16),
@@ -86,22 +91,24 @@ class _CounselingFormQ1State extends State<CounselingFormQ1> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
-                    ),
-                    child: const Text(
-                      "Student",
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      elevation: selectedRole == 'Student' ? 10 : 2,
                     ),
                   ),
                 ),
                 const SizedBox(height: 20),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
+                  child: ElevatedButton.icon(
                     onPressed: () {
                       setState(() {
                         selectedRole = 'Faculty';
                       });
                     },
+                    icon: const Icon(Icons.person, color: Colors.white),
+                    label: const Text(
+                      "Faculty member",
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 80, vertical: 16),
@@ -109,10 +116,7 @@ class _CounselingFormQ1State extends State<CounselingFormQ1> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
-                    ),
-                    child: const Text(
-                      "Faculty member",
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      elevation: selectedRole == 'Faculty' ? 10 : 2,
                     ),
                   ),
                 ),
@@ -143,6 +147,7 @@ class _CounselingFormQ1State extends State<CounselingFormQ1> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
+                        elevation: 5,
                       ),
                       child: const Text(
                         'Yes',
@@ -162,6 +167,7 @@ class _CounselingFormQ1State extends State<CounselingFormQ1> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
+                        elevation: 5,
                       ),
                       child: const Text(
                         'No',

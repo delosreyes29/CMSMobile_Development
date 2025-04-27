@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:cmsystem/screens/forms/counselingform_q4.dart';
-import 'package:cmsystem/screens/forms/counselingform_q10.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CounselingFormQ3 extends StatefulWidget {
-  const CounselingFormQ3({super.key});
+  final String documentId;
+
+  const CounselingFormQ3({super.key, required this.documentId});
 
   @override
   State<CounselingFormQ3> createState() => _CounselingFormQ3State();
@@ -13,23 +15,6 @@ class CounselingFormQ3 extends StatefulWidget {
 
 class _CounselingFormQ3State extends State<CounselingFormQ3> {
   String selectedMode = '';
-
-  void _navigateToNext() {
-    if (selectedMode.isNotEmpty) {
-      Widget nextScreen = selectedMode == 'Referral'
-          ? const CounselingFormQ10()
-          : const CounselingFormQ4();
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => nextScreen),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select a mode of counseling.')),
-      );
-    }
-  }
 
   Widget _buildModeButton(String title, String description) {
     bool isSelected = selectedMode == title;
@@ -99,8 +84,6 @@ class _CounselingFormQ3State extends State<CounselingFormQ3> {
             // Mode Options
             _buildModeButton('Walk-in',
                 'Students take the initiative to go to the counseling office directly.'),
-            // _buildModeButton('Referral',
-            //     'Faculty members refer students who they believe need counseling by completing and sending a referral form to the counseling office.'),
             _buildModeButton('Online',
                 'A student chooses to have a counseling session conducted online rather than in person.'),
 
@@ -109,7 +92,40 @@ class _CounselingFormQ3State extends State<CounselingFormQ3> {
             // Next Button
             Center(
               child: ElevatedButton(
-                onPressed: _navigateToNext,
+                onPressed: () async {
+                  try {
+                    // Collect form data for Q3
+                    final formData = {
+                      'selectedMode': selectedMode,
+                    };
+
+                    // Update the existing document in Firestore
+                    await FirebaseFirestore.instance
+                        .collection('counselingForms')
+                        .doc(widget.documentId)
+                        .update(formData);
+
+                    // Navigate to CounselingFormQ4 and pass the same document ID
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            CounselingFormQ4(documentId: widget.documentId),
+                      ),
+                    );
+
+                    // Show success message
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content: Text('Form updated successfully!')),
+                    );
+                  } catch (e) {
+                    // Handle Firestore errors
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Error: $e')),
+                    );
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 80, vertical: 16),

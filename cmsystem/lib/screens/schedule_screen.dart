@@ -1,11 +1,11 @@
 import 'package:cmsystem/screens/forms/counselingform_consent.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:cmsystem/screens/history_screen.dart';
 import 'package:cmsystem/screens/home_screen.dart';
 import 'package:cmsystem/screens/notification/notification_screen.dart';
 import 'package:cmsystem/screens/settings_screen.dart';
-import 'dart:io';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -18,7 +18,20 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   final int _selectedIndex = 3; // Schedule tab index
-  File? _profileImage; // To hold the profile image
+  String userName = "User";
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Get current user's name
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null && user.email != null) {
+      setState(() {
+        userName = user.email!.split('@').first;
+      });
+    }
+  }
 
   void _onItemTapped(int index) {
     switch (index) {
@@ -47,19 +60,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       case 4:
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-              builder: (context) => SettingsScreen(
-                    profileImage:
-                        _profileImage, // Pass current image to settings
-                  )),
-        ).then((updatedImage) {
-          // After returning from Settings, update the profile image if changed
-          if (updatedImage != null) {
-            setState(() {
-              _profileImage = updatedImage;
-            });
-          }
-        });
+          MaterialPageRoute(builder: (context) => const SettingsScreen()),
+        );
         break;
     }
   }
@@ -67,7 +69,6 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: const Color(0xFFFDF5F7),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
@@ -76,42 +77,23 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             children: [
               Row(
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      // Navigate to SettingsScreen to change the profile image
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SettingsScreen(
-                                  profileImage: _profileImage,
-                                )),
-                      ).then((updatedImage) {
-                        if (updatedImage != null) {
-                          setState(() {
-                            _profileImage = updatedImage;
-                          });
-                        }
-                      });
-                    },
-                    child: CircleAvatar(
-                      backgroundColor: Colors.pink.shade100,
-                      radius: 25,
-                      backgroundImage: _profileImage != null
-                          ? FileImage(_profileImage!)
-                          : null, // Display the picked image
-                      child: _profileImage == null
-                          ? const Icon(
-                              Icons.person,
-                              color: Colors.white,
-                            )
-                          : null, // Default icon if no image is picked
+                  CircleAvatar(
+                    backgroundColor: Colors.pink.shade100,
+                    radius: 25,
+                    child: Text(
+                      userName.isNotEmpty ? userName[0].toUpperCase() : "U",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.pink.shade800,
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 12), // Adjusted spacing
-                  const Column(
+                  const SizedBox(width: 12),
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Welcome back !',
                         style: TextStyle(
                           fontSize: 16,
@@ -120,8 +102,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                         ),
                       ),
                       Text(
-                        'User Name',
-                        style: TextStyle(
+                        userName,
+                        style: const TextStyle(
                           fontSize: 14,
                           color: Colors.grey,
                         ),
@@ -185,6 +167,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 ),
               ),
               const SizedBox(height: 24),
+
               // Counselor Info
               Container(
                 decoration: BoxDecoration(
@@ -234,6 +217,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 ),
               ),
               const SizedBox(height: 24),
+
               // View Session History Button
               Center(
                 child: OutlinedButton(
@@ -264,7 +248,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         ),
       ),
 
-      // Updated Bottom Navigation Bar
+      // Bottom Navigation Bar
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.pink,

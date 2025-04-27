@@ -121,12 +121,18 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     CircleAvatar(
                       radius: 25,
                       backgroundColor: Colors.pink.shade100,
-                      backgroundImage: profileImageUrl.isNotEmpty
-                          ? NetworkImage(profileImageUrl)
-                          : null, // Display profile image if available
-                      child: profileImageUrl.isEmpty
-                          ? Icon(Icons.person, color: Colors.grey[600])
-                          : null, // Fallback icon if no image available
+                      child: Text(
+                        FirebaseAuth.instance.currentUser?.email
+                                ?.split('@')
+                                .first[0]
+                                .toUpperCase() ??
+                            "U",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.pink.shade800,
+                        ),
+                      ),
                     ),
                     const SizedBox(width: 10),
                     Column(

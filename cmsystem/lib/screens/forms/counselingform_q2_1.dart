@@ -1,3 +1,5 @@
+//no
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -53,7 +55,7 @@ class _CounselingFormQ2_1State extends State<CounselingFormQ2_1> {
     }
   }
 
-  void _onNextPressed() {
+  void _onNextPressed() async {
     if (nameController.text.isEmpty ||
         idController.text.isEmpty ||
         emailController.text.isEmpty ||
@@ -68,10 +70,43 @@ class _CounselingFormQ2_1State extends State<CounselingFormQ2_1> {
       return;
     }
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const CounselingFormQ3()),
-    );
+    try {
+      // Prepare data to store in Firestore
+      final formData = {
+        'fullName': nameController.text,
+        'uicId': idController.text,
+        'email': emailController.text,
+        'selectedDate': _selectedDay != null
+            ? "${_selectedDay!.year}-${_selectedDay!.month.toString().padLeft(2, '0')}-${_selectedDay!.day.toString().padLeft(2, '0')}"
+            : null,
+        'selectedTime': selectedTime?.format(context),
+      };
+
+      // Store data in Firestore and get the document ID
+      final docRef = await FirebaseFirestore.instance
+          .collection('counselingForms')
+          .add(formData);
+
+      final documentId = docRef.id; // Get the document ID
+
+      // Navigate to CounselingFormQ3 and pass the document ID
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CounselingFormQ3(documentId: documentId),
+        ),
+      );
+
+      // Show success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Form submitted successfully!')),
+      );
+    } catch (e) {
+      // Handle Firestore errors
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $e')),
+      );
+    }
   }
 
   Widget _buildTextField(String label, TextEditingController controller) {
@@ -122,27 +157,6 @@ class _CounselingFormQ2_1State extends State<CounselingFormQ2_1> {
           color: Colors.brown,
           shape: BoxShape.circle,
         ),
-      ),
-      calendarBuilders: CalendarBuilders(
-        markerBuilder: (context, day, events) {
-          final isFullyBooked = fullyBookedTimes.isNotEmpty &&
-              _selectedDay != null &&
-              isSameDay(_selectedDay!, day);
-          if (isFullyBooked) {
-            return Positioned(
-              bottom: 1,
-              child: Container(
-                width: 5,
-                height: 5,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.brown,
-                ),
-              ),
-            );
-          }
-          return null;
-        },
       ),
     );
   }
@@ -201,58 +215,12 @@ class _CounselingFormQ2_1State extends State<CounselingFormQ2_1> {
     );
   }
 
-  Widget _buildFullyBookedTable() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Fully Booked Time',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.shade300),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.pink.shade100,
-                child: const Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Fully Booked Time Slots',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 14),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              if (fullyBookedTimes.isEmpty)
-                const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Text('No fully booked time'),
-                )
-              else
-                ...fullyBookedTimes.map((time) => Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 12.0),
-                      child: Row(
-                        children: [
-                          Expanded(child: Text(time)),
-                        ],
-                      ),
-                    )),
-            ],
-          ),
-        ),
-      ],
-    );
+  bool _isFormValid() {
+    return nameController.text.isNotEmpty &&
+        idController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        _selectedDay != null &&
+        selectedTime != null;
   }
 
   @override
@@ -285,16 +253,16 @@ class _CounselingFormQ2_1State extends State<CounselingFormQ2_1> {
               _buildCalendar(),
               const SizedBox(height: 20),
               _buildTimeDropdown(),
-              const SizedBox(height: 20),
-              _buildFullyBookedTable(),
               const SizedBox(height: 30),
               Center(
                 child: ElevatedButton(
-                  onPressed: _onNextPressed,
+                  onPressed: _isFormValid() ? _onNextPressed : null,
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 80, vertical: 16),
-                    backgroundColor: Colors.pink.shade700,
+                    backgroundColor: _isFormValid()
+                        ? Colors.pink.shade700
+                        : Colors.grey.shade300,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),

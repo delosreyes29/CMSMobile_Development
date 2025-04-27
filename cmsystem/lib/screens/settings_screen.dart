@@ -1,65 +1,91 @@
 import 'package:cmsystem/screens/forms/counselingform_consent.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cmsystem/screens/home_screen.dart';
 import 'package:cmsystem/screens/notification/notification_screen.dart';
 import 'package:cmsystem/screens/schedule_screen.dart';
 import 'package:cmsystem/screens/login.dart';
-import 'dart:io';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key, File? profileImage});
+  const SettingsScreen({super.key});
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  String userName = "User";
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Get current user's name
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null && user.email != null) {
+      setState(() {
+        userName = user.email!.split('@').first;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: const Color(0xFFFDF5F7),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: 20.0, vertical: 16), // Adjusted margins
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // User Info Section
-              Row(
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.pink.shade100,
-                    radius: 25,
-                    child: const Icon(
-                      Icons.person,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(width: 12), // Adjusted spacing
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              Card(
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
                     children: [
-                      Text(
-                        'Welcome back !',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                      CircleAvatar(
+                        backgroundColor: Colors.pink.shade100,
+                        radius: 30,
+                        child: Text(
+                          userName.isNotEmpty ? userName[0].toUpperCase() : "U",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.pink.shade800,
+                          ),
                         ),
                       ),
-                      Text(
-                        'User Name',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                        ),
+                      const SizedBox(width: 16),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Welcome back!',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Text(
+                            userName,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
-                  )
-                ],
+                  ),
+                ),
               ),
-              const SizedBox(height: 30), // Adjusted spacing
+              const SizedBox(height: 30),
 
               // Settings Title
               const Text(
@@ -70,22 +96,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   color: Color(0xFF660033),
                 ),
               ),
-              const SizedBox(height: 24), // Adjusted spacing
+              const SizedBox(height: 24),
 
               // Account Section
-              const Text(
-                "Account",
-                style: TextStyle(fontWeight: FontWeight.bold),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(
+                  "Account",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
               ),
               const Divider(),
+              _buildSettingsItem("Profile", Icons.person),
+              _buildSettingsItem("Privacy", Icons.lock),
 
               // Support Section
-              const Text(
-                "Support",
-                style: TextStyle(fontWeight: FontWeight.bold),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(
+                  "Support",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
               ),
-              _buildSettingsItem("Help center"),
-              _buildSettingsItem("App feedback"),
+              const Divider(),
+              _buildSettingsItem("Help center", Icons.help_outline),
+              _buildSettingsItem("App feedback", Icons.feedback),
+
               const Spacer(),
 
               // Logout Button
@@ -96,7 +138,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => const LoginScreen()),
-                      (route) => false, // This removes all previous routes
+                      (route) => false,
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -113,7 +155,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 30), // Adjusted spacing
+              const SizedBox(height: 30),
             ],
           ),
         ),
@@ -121,7 +163,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
       // Bottom Navigation Bar
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 4, // Settings is index 4
+        currentIndex: 4,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.pink,
         unselectedItemColor: Colors.grey,
@@ -168,9 +210,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             label: 'Notifications',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle, size: 40), // Plus Button
-            label: '',
-          ),
+              icon: Icon(Icons.add_circle, size: 40), label: ''),
           BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today), label: 'Schedule'),
           BottomNavigationBarItem(
@@ -182,11 +222,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget _buildSettingsItem(String title) {
+  Widget _buildSettingsItem(String title, IconData icon) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
+      leading: Icon(icon, color: Colors.pink.shade700),
       title: Text(title),
-      trailing: const Icon(Icons.arrow_outward),
+      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
       onTap: () {
         // Add logic for other settings items if needed
       },
